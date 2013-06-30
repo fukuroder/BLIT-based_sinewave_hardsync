@@ -12,4 +12,4 @@ This wave is constructed with additive synthesis and BLIT synthesis.
 * * *
 
 ### Implementation by Reaktor
-* [BLIT-based sinewave hardsync](https://co.native-instruments.com/index.php?id=userlibrary&type=0&ulbr=1&plview=detail&patchid=12957)
+* [BLIT-based sinewave hardsync](https://co.native-instruments.com/index.php?id=userlibrary&type=0&ulbr=1&plview=detail&patchid=13037)
