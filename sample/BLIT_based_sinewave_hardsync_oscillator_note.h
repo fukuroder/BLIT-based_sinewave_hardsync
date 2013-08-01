@@ -45,7 +45,7 @@ public:
 	double	sin;
 	
 	/// 倍音数.
-	int		n;
+	unsigned int n;
 
 	/// 刻み幅.
 	double	dt;

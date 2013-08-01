@@ -37,6 +37,7 @@ protected:
 
 	double _zzz;
 
+	std::array<double, 3> _b;
 
 	//
 	double LinearInterpolatedSin( double iT );

@@ -13,11 +13,17 @@ namespace Steinberg { namespace Vst {
 BLIT_based_sinewave_hardsync_oscillator::BLIT_based_sinewave_hardsync_oscillator()
 {
 	// sine wave table
-	for(size_t ii = 0; ii< _sinTable.size()-1; ii++)
+	for(size_t ii = 0; ii < _sinTable.size()-1; ii++)
 	{
 		_sinTable[ii] = sin( 2.0*M_PI * ii/(_sinTable.size()-1));
 	}
 	_sinTable.back() = 0.0;
+
+	// b[n] coeff
+	for( size_t n = 0; n < _b.size(); n++ )
+	{
+		_b[n] = 0.0;
+	}
 
 	setLeak(0.995);
 	setSlave(1.2);
@@ -34,6 +40,12 @@ void BLIT_based_sinewave_hardsync_oscillator::setSlave(double value)
 {
 	_Slave = value;
 	_zzz = -4*::sin( M_PI*value);
+
+	for( size_t n = 1; n <= _b.size(); n++ )
+	{
+		int sgn = n%2==0? -1 : 1;
+		_b[n-1] = sgn*::sin(M_PI*_Slave)*2/M_PI*n/((n+_Slave)*(n-_Slave));
+	}
 }
 
 //-------------
@@ -101,21 +113,22 @@ void BLIT_based_sinewave_hardsync_oscillator::updateOscillater(BLIT_based_sinewa
 	note.t += note.dt;
 	if ( 1.0 <= note.t )note.t -= 1.0;
 
-
-	int N = std::min(3, note.n);
-
+	//------------------
+	// additive section
+	//------------------
 	double additive = 0.0;
-	for( int ii = 1; ii <= N; ii++ )
+	int N = std::min((unsigned int)_b.size(), note.n);
+	for( int n = 1; n <= N; n++ )
 	{
-		int sgn = ii%2==0? -1 : 1;
-
-		double b =sgn*::sin(M_PI*_Slave)*2/M_PI*ii/((ii+_Slave)*(ii-_Slave));
-		additive += b*LinearInterpolatedSin( ::fmod( ii*note.t, 1.0 ) );
+		additive += _b[n-1]*LinearInterpolatedSin( ::fmod( n*note.t, 1.0 ) );
 	}
 
-	if( note.n >= 4 )
+	//--------------
+	// BLIT section
+	//--------------
+	if( note.n > _b.size() )
 	{
-		note.blit = note.blit*_Leak + BLIT(note.t, 4, note.n)*note.dt;
+		note.blit = note.blit*_Leak + BLIT(note.t,  _b.size()+1, note.n)*note.dt;
 	}
 	else
 	{
