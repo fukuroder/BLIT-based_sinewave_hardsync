@@ -88,7 +88,7 @@ double BLIT_based_sinewave_hardsync_oscillator::BLIT( double t, int startN, int 
 	double x_numerator1 = LinearInterpolatedSin(::fmod(0.5*tt*N1 + 0.25, 1.0));
 
 	int N2 = endN-startN+1;
-	if( t < 1.0e-12 || 1.0 - 1.0e-12 < t )// TODO: 要チューニング
+	if( tt < 1.0e-12 || 1.0 - 1.0e-12 < tt )// TODO: 要チューニング
 	{
 #ifdef _DEBUG
 		::OutputDebugString(L"ロピタルの定理を適用");
