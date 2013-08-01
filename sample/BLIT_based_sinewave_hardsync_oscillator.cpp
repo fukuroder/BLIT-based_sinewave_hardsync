@@ -43,8 +43,7 @@ void BLIT_based_sinewave_hardsync_oscillator::setSlave(double value)
 
 	for( size_t n = 1; n <= _b.size(); n++ )
 	{
-		int sgn = n%2==0? -1 : 1;
-		_b[n-1] = sgn*::sin(M_PI*_Slave)*2/M_PI*n/((n+_Slave)*(n-_Slave));
+		_b[n-1] = -::sin(M_PI*_Slave)*2/M_PI*n/((n+_Slave)*(n-_Slave));
 	}
 }
 
@@ -79,16 +78,14 @@ double BLIT_based_sinewave_hardsync_oscillator::LinearInterpolatedSin( double x 
 //-------------
 double BLIT_based_sinewave_hardsync_oscillator::BLIT( double t, int startN, int endN )
 {
-	double tt = ::fmod(t + 0.5, 1.0);
-
 	// 分母
-	double x_denominator = LinearInterpolatedSin( 0.5*tt );
+	double x_denominator = LinearInterpolatedSin( 0.5*t );
 
 	int N1 = endN+startN;
-	double x_numerator1 = LinearInterpolatedSin(::fmod(0.5*tt*N1 + 0.25, 1.0));
+	double x_numerator1 = LinearInterpolatedSin(::fmod(0.5*t*N1 + 0.25, 1.0));
 
 	int N2 = endN-startN+1;
-	if( tt < 1.0e-12 || 1.0 - 1.0e-12 < tt )// TODO: 要チューニング
+	if( t < 1.0e-12 || 1.0 - 1.0e-12 < t )// TODO: 要チューニング
 	{
 #ifdef _DEBUG
 		::OutputDebugString(L"ロピタルの定理を適用");
@@ -99,7 +96,7 @@ double BLIT_based_sinewave_hardsync_oscillator::BLIT( double t, int startN, int 
 	else
 	{
 		// 分子
-		double x_numerator2 = LinearInterpolatedSin(::fmod(0.5*tt*N2, 1.0));
+		double x_numerator2 = LinearInterpolatedSin(::fmod(0.5*t*N2, 1.0));
 
 		return x_numerator1*x_numerator2/x_denominator;
 	}

@@ -38,7 +38,7 @@ void BLIT_based_sinewave_hardsync_oscillator_note::trigger(const NoteOnEvent& no
 	//
 	double freq = 440.0*( ::pow(2.0, (_noteOn.pitch - _note_no_center)/12.0 ));
 	n = static_cast<int>(srate / 2.0 / freq);
-	t = 0.0;
+	t = 0.5;
 	blit = 0.0;
 	sin = 0.0;
 	dt = freq / srate;
