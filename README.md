@@ -1,4 +1,4 @@
-### BLIT-based sinewave hardsync(vst3 sample)
+### BLIT-based sinewave hardsync(vst3/VC++2012)
 
 ![Screenshot](https://raw.github.com/fukuroder/BLIT-based_sinewave_hardsync/master/screenshot.png)
 

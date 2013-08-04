@@ -114,7 +114,7 @@ void BLIT_based_sinewave_hardsync_oscillator::updateOscillater(BLIT_based_sinewa
 	// additive section
 	//------------------
 	double additive = 0.0;
-	int N = std::min((unsigned int)_b.size(), note.n);
+	int N = (_b.size() < note.n)? _b.size() : note.n;
 	for( int n = 1; n <= N; n++ )
 	{
 		additive += _b[n-1]*LinearInterpolatedSin( ::fmod( n*note.t, 1.0 ) );
