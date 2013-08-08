@@ -1,49 +1,49 @@
 ﻿#pragma once
-
-// include
 #include <array>
 
-namespace Steinberg {namespace Vst {
+namespace Steinberg{ namespace Vst{
 
-// class
-class BLIT_based_sinewave_hardsync_oscillator_note;
+	// Note class
+	class BLIT_based_sinewave_hardsync_oscillator_note;
 
-//
-class BLIT_based_sinewave_hardsync_oscillator
-{
-public:
-	// constructor
-	BLIT_based_sinewave_hardsync_oscillator();
+	// Oscillator class
+	class BLIT_based_sinewave_hardsync_oscillator
+	{
+	public:
+		// Constructor
+		BLIT_based_sinewave_hardsync_oscillator();
 
-	//
-	void setLeak(double value);
+		// Leak
+		void setLeak(double value);
 
-	//
-	void setSlave(double value);
+		// Slave
+		void setSlave(double value);
 
-	//
-	void updateOscillater(BLIT_based_sinewave_hardsync_oscillator_note& note);
+		// Update
+		void updateOscillater(BLIT_based_sinewave_hardsync_oscillator_note& note);
 
 
-protected:
-	//
-	std::array<double, (1<<13)+1> _sinTable;
-	
-	//
-	double _Leak;
+	protected:
+		// 
+		std::array<double, (1<<13)+1> _sinTable;
 
-	//
-	double _Slave;
+		// 
+		double _Leak;
 
-	double _zzz;
+		// 
+		double _Slave;
 
-	std::array<double, 3> _b;
+		//
+		double _zzz;
 
-	//
-	double LinearInterpolatedSin( double iT );
+		//
+		std::array<double, 3> _b;
 
-	//
-	double BLIT( double t, int startN, int endN );
-};
+		// 
+		double LinearInterpolatedSin( double iT );
 
-}}
+		// 
+		double BLIT( double t, int startN, int endN );
+	};
+
+}} // namespace
