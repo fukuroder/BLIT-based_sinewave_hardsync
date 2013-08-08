@@ -30,9 +30,6 @@ namespace Steinberg{ namespace Vst{
 		// 
 		double _Leak;
 
-		// 
-		double _Slave;
-
 		//
 		double _zzz;
 
