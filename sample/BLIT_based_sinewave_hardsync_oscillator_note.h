@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "BLIT_based_sinewave_hardsync_oscillator_note.h"
 #include "pluginterfaces/vst/ivstevents.h"
 

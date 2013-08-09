@@ -1,4 +1,4 @@
-﻿#include "BLITSineHardSync_processor.h"
+#include "BLITSineHardSync_processor.h"
 #include "BLITSineHardSync_guids.h"
 #include "pluginterfaces/base/ibstream.h"
 #include "pluginterfaces/vst/ivstparameterchanges.h"

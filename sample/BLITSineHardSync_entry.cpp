@@ -1,4 +1,4 @@
-﻿#include "BLITSineHardSync_processor.h"
+#include "BLITSineHardSync_processor.h"
 #include "BLITSineHardSync_controller.h"
 #include "BLITSineHardSync_guids.h"
 #include "public.sdk/source/main//pluginfactoryvst3.h"

@@ -1,4 +1,4 @@
-﻿#define _USE_MATH_DEFINES
+#define _USE_MATH_DEFINES
 #include <math.h>
 #include "BLIT_based_sinewave_hardsync_oscillator.h"
 #include "BLIT_based_sinewave_hardsync_oscillator_note.h"
