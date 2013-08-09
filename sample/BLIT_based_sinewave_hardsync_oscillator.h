@@ -3,28 +3,28 @@
 
 namespace Steinberg{ namespace Vst{
 
-	// Note class
+	// note class
 	class BLIT_based_sinewave_hardsync_oscillator_note;
 
-	// Oscillator class
+	// oscillator class
 	class BLIT_based_sinewave_hardsync_oscillator
 	{
 	public:
-		// Constructor
+		// constructor
 		BLIT_based_sinewave_hardsync_oscillator();
 
-		// Leak
+		// leak
 		void setLeak(double value);
 
-		// Slave
+		// slave
 		void setSlave(double value);
 
-		// Update
+		// update
 		void updateOscillater(BLIT_based_sinewave_hardsync_oscillator_note& note);
 
 
 	protected:
-		// 
+		// sine table
 		std::array<double, (1<<13)+1> _sinTable;
 
 		// 

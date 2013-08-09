@@ -11,7 +11,7 @@ namespace Steinberg{ namespace Vst{
 	{
 		// constructor(private)
 		BLITSineHardSync_processor();
-
+		
 	public:
 		// create
 		static FUnknown* create(void* context);
@@ -29,7 +29,7 @@ namespace Steinberg{ namespace Vst{
 
 	protected:
 
-		// ƒpƒ‰ƒ[ƒ^ID
+		// parameter ID
 		enum
 		{
 			Leak,

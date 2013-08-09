@@ -4,14 +4,14 @@
 
 namespace Steinberg{ namespace Vst{
 
-	/// Note class
+	/// note class
 	class BLIT_based_sinewave_hardsync_oscillator_note
 	{
 	public:
-		// Constructor
+		// constructor
 		BLIT_based_sinewave_hardsync_oscillator_note();
 
-		// Note on
+		// note on
 		void trigger(const NoteOnEvent& noteOn);
 
 		// 
@@ -41,10 +41,10 @@ namespace Steinberg{ namespace Vst{
 		// 
 		unsigned int n;
 
-		// 
+		//
 		double	dt;
 
-		//
+		
 		int srate;
 
 		//
@@ -54,9 +54,10 @@ namespace Steinberg{ namespace Vst{
 
 	protected:
 
-		// ADSR.
+		// ADSR
 		ADSR	_adsr;
 
+		//
 		NoteOnEvent _noteOn;
 
 		// 

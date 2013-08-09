@@ -15,13 +15,13 @@ namespace Steinberg{ namespace Vst{
 		setControllerClass(BLITSineHardSyncControllerID);
 	}
 
-	//-------------------------------------------------------------------------
+	//
 	FUnknown* BLITSineHardSync_processor::create(void* context)
 	{
 		return (IAudioProcessor*)new BLITSineHardSync_processor();
 	}
 
-	//-------------------------------------------------------------------------
+	//
 	tresult PLUGIN_API BLITSineHardSync_processor::initialize(FUnknown* context)
 	{
 		// base class initialization 
@@ -38,13 +38,13 @@ namespace Steinberg{ namespace Vst{
 		return kResultOk;
 	}
 
-	//-------------------------------------------------------------------------
+	//
 	tresult PLUGIN_API BLITSineHardSync_processor::setBusArrangements(
 		SpeakerArrangement* inputs,
 		int32 numIns,
 		SpeakerArrangement* outputs,
-		int32 numOuts
-		){
+		int32 numOuts)
+	{
 			if (numIns == 0 && numOuts == 1 && outputs[0] == SpeakerArr::kStereo)
 			{
 				return AudioEffect::setBusArrangements(inputs, numIns, outputs, numOuts);
@@ -52,14 +52,12 @@ namespace Steinberg{ namespace Vst{
 			return kResultFalse;
 	}
 
+	//
 	tresult PLUGIN_API BLITSineHardSync_processor::setProcessing (TBool state)
 	{
 		if( state == 1)
 		{
-			//------
 			// setup
-			//------
-
 			for(auto note = _notes.begin(); note != _notes.end(); ++note)
 			{
 				// set sample rate
@@ -70,7 +68,7 @@ namespace Steinberg{ namespace Vst{
 		return kResultOk;
 	}
 
-	//-------------------------------------------------------------------------
+	//
 	tresult PLUGIN_API BLITSineHardSync_processor::process(ProcessData& data)
 	{
 		//-------------------

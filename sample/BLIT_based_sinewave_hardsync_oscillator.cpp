@@ -44,12 +44,10 @@ namespace Steinberg{ namespace Vst{
 		}
 	}
 
-	//-------------
-	// 
-	//-------------
-	double BLIT_based_sinewave_hardsync_oscillator::LinearInterpolatedSin( double x )
+	// calculate linear-interpolated sine wave
+	double BLIT_based_sinewave_hardsync_oscillator::LinearInterpolatedSin(double x)
 	{
-		// scaling
+		// scale table size
 		double pos = (_sinTable.size()-1) * x;
 
 		// cast to int
@@ -74,7 +72,7 @@ namespace Steinberg{ namespace Vst{
 		int N2 = endN-startN+1;
 		if( t < 1.0e-12 || 1.0 - 1.0e-12 < t )
 		{
-			// 
+			// apply L'Hopital's rule
 			return x_numerator1*N2;
 		}
 		else
@@ -91,6 +89,7 @@ namespace Steinberg{ namespace Vst{
 	//-------------
 	void BLIT_based_sinewave_hardsync_oscillator::updateOscillater(BLIT_based_sinewave_hardsync_oscillator_note& note)
 	{
+		// update t
 		note.t += note.dt;
 		if ( 1.0 <= note.t )note.t -= 1.0;
 

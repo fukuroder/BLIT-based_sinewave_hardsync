@@ -17,7 +17,7 @@ namespace Steinberg{ namespace Vst{
 		virtual tresult PLUGIN_API initialize(FUnknown* context);
 	};
 
-	// Leak Parameter
+	// leak parameter class
 	class BLITSineHardSync_LeakParameter : public Parameter
 	{
 	public:
@@ -25,7 +25,7 @@ namespace Steinberg{ namespace Vst{
 		virtual void toString(ParamValue normValue, String128 string)const;
 	};
 
-	// Slave Parameter
+	// slave parameter class
 	class BLITSineHardSync_SlaveParameter : public Parameter
 	{
 	public:
