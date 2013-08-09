@@ -74,7 +74,7 @@ namespace Steinberg{ namespace Vst{
 		int N2 = endN-startN+1;
 		if( t < 1.0e-12 || 1.0 - 1.0e-12 < t )
 		{
-			// ゼロ割防止。ロピタルの定理を適用
+			// 
 			return x_numerator1*N2;
 		}
 		else

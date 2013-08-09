@@ -32,7 +32,7 @@ namespace Steinberg{ namespace Vst{
 	//---------
 	void BLIT_based_sinewave_hardsync_oscillator_note::trigger(const NoteOnEvent& noteOn)
 	{
-		_noteOn = noteOn; // コピー
+		_noteOn = noteOn; //
 		_adsr = On;
 
 		//
@@ -44,7 +44,7 @@ namespace Steinberg{ namespace Vst{
 		dt = freq / srate;
 	}
 
-	/// タグ取得.
+	/// 
 	int32 BLIT_based_sinewave_hardsync_oscillator_note::id()const
 	{
 		return _noteOn.noteId;

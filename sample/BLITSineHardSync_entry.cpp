@@ -3,14 +3,14 @@
 #include "BLITSineHardSync_guids.h"
 #include "public.sdk/source/main//pluginfactoryvst3.h"
 
-// DLLロード後に呼ばれる
+// 
 bool InitModule()
 {
 	// nothing to do
 	return true;
 }
 
-// DLLアンロード後に呼ばれる
+//
 bool DeinitModule()
 {
 	// nothing to do
