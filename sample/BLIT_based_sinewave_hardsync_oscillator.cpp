@@ -61,8 +61,10 @@ namespace Steinberg{ namespace Vst{
 	//-------------
 	// BLIT
 	//-------------
-	double BLIT_based_sinewave_hardsync_oscillator::BLIT( double t, int startN, int endN )
+	double BLIT_based_sinewave_hardsync_oscillator::BLIT( double t, int endN )
 	{
+		int startN = _b.size()+1;
+
 		// denominator
 		double x_denominator = LinearInterpolatedSin( 0.5*t );
 
@@ -108,7 +110,7 @@ namespace Steinberg{ namespace Vst{
 		//--------------
 		if( note.n > _b.size() )
 		{
-			note.blit = note.blit*_leak + BLIT(note.t,  _b.size()+1, note.n)*note.dt;
+			note.blit = note.blit*_leak + BLIT(note.t, note.n)*note.dt;
 		}
 		else
 		{

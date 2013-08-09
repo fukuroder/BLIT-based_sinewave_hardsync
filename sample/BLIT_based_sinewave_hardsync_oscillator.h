@@ -40,7 +40,7 @@ namespace Steinberg{ namespace Vst{
 		double LinearInterpolatedSin(double t);
 
 		// 
-		double BLIT( double t, int startN, int endN );
+		double BLIT(double t, int endN);
 	};
 
 }} // namespace
