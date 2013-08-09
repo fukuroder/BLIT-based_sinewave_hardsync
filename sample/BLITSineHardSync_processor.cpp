@@ -83,23 +83,23 @@ namespace Steinberg{ namespace Vst{
 				if( paramQueue )
 				{
 					int32 offsetSamples;
-					double value;
+					double valueNormalized;
 
 					// get parameter
-					if(paramQueue->getPoint(paramQueue->getPointCount() - 1, offsetSamples, value) == kResultTrue)
+					if(paramQueue->getPoint(paramQueue->getPointCount() - 1, offsetSamples, valueNormalized) == kResultTrue)
 					{
 						ParamID id = paramQueue->getParameterId();
 						if( id == Leak )
 						{
 							// -> [0.99, 1.0]
-							double Leak = 0.99 + 0.01 * value;  
-							blit.setLeak(Leak);
+							double value = 0.99 + 0.01 * valueNormalized;  
+							blit.setLeak(value);
 						}
 						else if( id == Slave )
 						{
 							// -> [1.1, 1.9]
-							double Slave = 1.1 + 0.8 * value;  
-							blit.setSlave(Slave);
+							double value = 1.1 + 0.8 * valueNormalized;  
+							blit.setSlave(value);
 						}
 					}
 				}

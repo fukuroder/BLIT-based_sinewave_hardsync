@@ -29,7 +29,7 @@ namespace Steinberg{ namespace Vst{
 	// set leak parameter
 	void BLIT_based_sinewave_hardsync_oscillator::setLeak(double value)
 	{
-		_Leak = value;
+		_leak = value;
 	}
 
 	// set slave parameter
@@ -108,7 +108,7 @@ namespace Steinberg{ namespace Vst{
 		//--------------
 		if( note.n > _b.size() )
 		{
-			note.blit = note.blit*_Leak + BLIT(note.t,  _b.size()+1, note.n)*note.dt;
+			note.blit = note.blit*_leak + BLIT(note.t,  _b.size()+1, note.n)*note.dt;
 		}
 		else
 		{

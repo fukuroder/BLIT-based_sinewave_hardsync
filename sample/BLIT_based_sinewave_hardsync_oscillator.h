@@ -27,8 +27,8 @@ namespace Steinberg{ namespace Vst{
 		// sine table
 		std::array<double, (1<<13)+1> _sinTable;
 
-		// 
-		double _Leak;
+		// leak
+		double _leak;
 
 		//
 		double _zzz;
@@ -37,7 +37,7 @@ namespace Steinberg{ namespace Vst{
 		std::array<double, 3> _b;
 
 		// 
-		double LinearInterpolatedSin( double iT );
+		double LinearInterpolatedSin(double t);
 
 		// 
 		double BLIT( double t, int startN, int endN );
