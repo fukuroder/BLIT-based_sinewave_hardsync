@@ -15,16 +15,9 @@ namespace Steinberg{ namespace Vst{
 		}
 		_sinTable.back() = 0.0;
 
-		// b[n] coeff
-		for( size_t n = 0; n < _b.size(); n++ )
-		{
-			_b[n] = 0.0;
-		}
-
 		// initialize parameter
 		setLeak(0.995);
 		setSlave(1.2);
-		setN(2);
 	}
 
 	// set leak parameter
@@ -37,17 +30,27 @@ namespace Steinberg{ namespace Vst{
 	void BLIT_based_sinewave_hardsync_oscillator::setSlave(double value)
 	{
 		_zzz = -4*::sin(M_PI*value);
-				
-		for( int n = 1; n <= _b.size(); n++ )
+		if( value < 1.0 + 1.0e-12 )
 		{
-			_b[n-1] = -2*n*::sin(M_PI*value)/(M_PI*(n+value)*(n-value));
+			_b1 = -1.0;
+			_b2 = 0.0;
+			_zzz = 0.0;
 		}
-	}
+		else if( value < 2 - 1.0e-12 )
+		{
+			// _b[n] = -2*n*::sin(M_PI*value)/(M_PI*(n+value)*(n-value));
 
-	//
-	void BLIT_based_sinewave_hardsync_oscillator::setN(unsigned int value)
-	{
-		_N = value < _b.size()? value:_b.size();
+			_b1 =  -2*1*::sin(M_PI*value)/(M_PI*(1+value)*(1-value));
+			_b2 =  -2*2*::sin(M_PI*value)/(M_PI*(2+value)*(2-value));
+			
+			_zzz = -4*::sin(M_PI*value);
+		}		
+		else
+		{
+			_b1 = 0.0;
+			_b2 = 1.0;
+			_zzz = 0.0;
+		}
 	}
 
 	// calculate linear-interpolated sine wave
@@ -69,7 +72,7 @@ namespace Steinberg{ namespace Vst{
 	//-------------
 	double BLIT_based_sinewave_hardsync_oscillator::BLIT( double t, int endN )
 	{
-		int startN = _N+1;
+		const int startN = 3;
 
 		// denominator
 		double x_denominator = LinearInterpolatedSin( 0.5*t );
@@ -101,20 +104,12 @@ namespace Steinberg{ namespace Vst{
 		note.t += note.dt;
 		if ( 1.0 <= note.t )note.t -= 1.0;
 
-		//------------------
-		// additive section
-		//------------------
-		double additive = 0.0;
-		int N = (_N < note.n)? _N : note.n;
-		for( int n = 1; n <= N; n++ )
-		{
-			additive += _b[n-1]*LinearInterpolatedSin( ::fmod( n*note.t, 1.0 ) );
-		}
+		// additive section(k=1 -> 2)
+		double additive = _b1*LinearInterpolatedSin(note.t)
+			            + _b2*LinearInterpolatedSin(::fmod( 2*note.t, 1.0 ) );
 
-		//--------------
-		// BLIT section
-		//--------------
-		if( _N < note.n )
+		// BLIT section(k=3 -> Nyquist limit)
+		if( note.n >= 3)
 		{
 			note.blit = note.blit*_leak + BLIT(note.t, note.n)*note.dt;
 		}

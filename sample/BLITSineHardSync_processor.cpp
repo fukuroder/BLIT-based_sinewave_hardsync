@@ -97,15 +97,9 @@ namespace Steinberg{ namespace Vst{
 						}
 						else if( id == Slave )
 						{
-							// -> [1.1, 1.9]
-							double value = 1.1 + 0.8 * valueNormalized;  
+							// -> [1.0, 2.0]
+							double value = 1.0 + valueNormalized;  
 							blit.setSlave(value);
-						}
-						else if( id == N )
-						{
-							// -> [1.0, 5.0]
-							int value = static_cast<int>( 1 + 4 * valueNormalized + 0.5 );
-							blit.setN(value);
 						}
 					}
 				}
