@@ -33,7 +33,8 @@ namespace Steinberg{ namespace Vst{
 		enum
 		{
 			Leak,
-			Slave
+			Slave,
+			N
 		};
 
 		// notes

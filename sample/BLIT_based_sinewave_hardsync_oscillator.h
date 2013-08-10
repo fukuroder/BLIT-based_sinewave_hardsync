@@ -19,6 +19,9 @@ namespace Steinberg{ namespace Vst{
 		// slave
 		void setSlave(double value);
 
+		//
+		void setN(unsigned int value);
+
 		// update
 		void updateOscillater(BLIT_based_sinewave_hardsync_oscillator_note& note);
 
@@ -33,8 +36,10 @@ namespace Steinberg{ namespace Vst{
 		//
 		double _zzz;
 
+		unsigned int _N;
+
 		//
-		std::array<double, 3> _b;
+		std::array<double, 5> _b;
 
 		// 
 		double LinearInterpolatedSin(double t);

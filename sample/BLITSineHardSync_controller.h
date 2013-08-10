@@ -33,4 +33,12 @@ namespace Steinberg{ namespace Vst{
 		virtual void toString(ParamValue normValue, String128 string)const;
 	};
 
+	// N parameter class
+	class BLITSineHardSync_NParameter : public Parameter
+	{
+	public:
+		BLITSineHardSync_NParameter();
+		virtual void toString(ParamValue normValue, String128 string)const;
+	};
+
 }} // namespace

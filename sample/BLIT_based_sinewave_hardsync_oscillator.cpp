@@ -24,6 +24,7 @@ namespace Steinberg{ namespace Vst{
 		// initialize parameter
 		setLeak(0.995);
 		setSlave(1.2);
+		setN(2);
 	}
 
 	// set leak parameter
@@ -37,11 +38,16 @@ namespace Steinberg{ namespace Vst{
 	{
 		_zzz = -4*::sin(M_PI*value);
 				
-		
-		for( size_t n = 1; n <= _b.size(); n++ )
+		for( int n = 1; n <= _b.size(); n++ )
 		{
-			_b[n-1] = -::sin(M_PI*value)*2/M_PI*n/((n+value)*(n-value));
+			_b[n-1] = -2*n*::sin(M_PI*value)/(M_PI*(n+value)*(n-value));
 		}
+	}
+
+	//
+	void BLIT_based_sinewave_hardsync_oscillator::setN(unsigned int value)
+	{
+		_N = value < _b.size()? value:_b.size();
 	}
 
 	// calculate linear-interpolated sine wave
@@ -63,7 +69,7 @@ namespace Steinberg{ namespace Vst{
 	//-------------
 	double BLIT_based_sinewave_hardsync_oscillator::BLIT( double t, int endN )
 	{
-		int startN = _b.size()+1;
+		int startN = _N+1;
 
 		// denominator
 		double x_denominator = LinearInterpolatedSin( 0.5*t );
@@ -99,7 +105,7 @@ namespace Steinberg{ namespace Vst{
 		// additive section
 		//------------------
 		double additive = 0.0;
-		int N = (_b.size() < note.n)? _b.size() : note.n;
+		int N = (_N < note.n)? _N : note.n;
 		for( int n = 1; n <= N; n++ )
 		{
 			additive += _b[n-1]*LinearInterpolatedSin( ::fmod( n*note.t, 1.0 ) );
@@ -108,7 +114,7 @@ namespace Steinberg{ namespace Vst{
 		//--------------
 		// BLIT section
 		//--------------
-		if( note.n > _b.size() )
+		if( _N < note.n )
 		{
 			note.blit = note.blit*_leak + BLIT(note.t, note.n)*note.dt;
 		}

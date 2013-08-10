@@ -27,6 +27,7 @@ namespace Steinberg{ namespace Vst{
 
 		parameters.addParameter(new BLITSineHardSync_LeakParameter());
 		parameters.addParameter(new BLITSineHardSync_SlaveParameter());
+		parameters.addParameter(new BLITSineHardSync_NParameter());
 
 		return kResultOk;
 	}
@@ -53,6 +54,18 @@ namespace Steinberg{ namespace Vst{
 	void BLITSineHardSync_SlaveParameter::toString(ParamValue normValue, String128 string)const
 	{
 		::swprintf_s(string, 128, L"%.3f", 1.1 + 0.8 * normValue );
+	}
+
+	//
+	BLITSineHardSync_NParameter::BLITSineHardSync_NParameter()
+		:Parameter(L"N", 2, L"", (2-1)/5.0)
+	{
+	}
+
+	//
+	void BLITSineHardSync_NParameter::toString(ParamValue normValue, String128 string)const
+	{
+		::swprintf_s(string, 128, L"%d", static_cast<int>(1 + 4 * normValue + 0.5) );
 	}
 
 }} // namespace
