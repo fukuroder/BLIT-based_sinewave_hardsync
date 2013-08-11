@@ -21,11 +21,11 @@ This wave is constructed with additive synthesis and BLIT synthesis.
     blit_sum = 0            # current value for BLIT section
 
 # set frequency...
-    n = sample_rate/2/master_freq                       # Nyquist limit (round down)
-    dt = master_freq/sample_rate                        # delta t
-    b1 =  2*::sin(PI*slave)/(PI*(1+slave)*(1-slave))    # Fourier coefficient for sin(2*PI*1*t)
-    b2 = -4*::sin(PI*slave)/(PI*(2+slave)*(2-slave))    # Fourier coefficient for sin(2*PI*2*t)
-    b3 = -4*::sin(PI*slave)                             # used for BLIT section
+    n = sample_rate/2/master_freq                   # Nyquist limit (round down)
+    dt = master_freq/sample_rate                    # delta t
+    b1 =  2*sin(PI*slave)/(PI*(1+slave)*(1-slave))  # Fourier coefficient for sin(2*PI*1*t)
+    b2 = -4*sin(PI*slave)/(PI*(2+slave)*(2-slave))  # Fourier coefficient for sin(2*PI*2*t)
+    b3 = -4*sin(PI*slave)                           # used for BLIT section
 
 # for each sample...
     t += dt
@@ -37,4 +37,4 @@ This wave is constructed with additive synthesis and BLIT synthesis.
 - - -
 
 ### Implementation by Reaktor
-* [BLIT-based sinewave hardsync](https://co.native-instruments.com/index.php?id=userlibrary&type=0&ulbr=1&plview=detail&patchid=13037)
+* [BLIT-based sinewave hardsync](https://co.native-instruments.com/index.php?id=userlibrary&type=0&ulbr=1&plview=detail&patchid=13180)
