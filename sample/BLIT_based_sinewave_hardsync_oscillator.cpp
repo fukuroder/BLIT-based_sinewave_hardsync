@@ -1,9 +1,61 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include "BLIT_based_sinewave_hardsync_oscillator.h"
-#include "BLIT_based_sinewave_hardsync_oscillator_note.h"
 
 namespace Steinberg{ namespace Vst{
+
+	// constructor
+	BLIT_based_sinewave_hardsync_oscillator_note::BLIT_based_sinewave_hardsync_oscillator_note()
+		:_adsr(Off)
+		,t(0.0)
+		,sin(0.0)
+		,blit(0.0)
+		,n(0)
+		,dt(0.0)
+		,srate(44100)
+	{
+	}
+
+	//
+	void BLIT_based_sinewave_hardsync_oscillator_note::setSampleRate(int srate)
+	{
+		this->srate = srate;
+	}
+
+	//
+	void BLIT_based_sinewave_hardsync_oscillator_note::release()
+	{
+		_adsr = Off;
+	}
+
+	//
+	void BLIT_based_sinewave_hardsync_oscillator_note::trigger(const NoteOnEvent& noteOn)
+	{
+		_noteOn = noteOn; // copy
+		_adsr = On;
+
+		//
+		double freq = 440.0*( ::pow(2.0, (_noteOn.pitch - _note_no_center)/12.0 ));
+		n = static_cast<int>(srate / 2.0 / freq);
+		t = 0.5;
+		blit = 0.0;
+		sin = 0.0;
+		dt = freq / srate;
+	}
+
+	//
+	int32 BLIT_based_sinewave_hardsync_oscillator_note::id()const
+	{
+		return _noteOn.noteId;
+	}
+
+	//
+	double BLIT_based_sinewave_hardsync_oscillator_note::velocity()const
+	{
+		return _noteOn.velocity;
+	}
+
+	//--------------------------------------------------------------------------
 
 	// constructor
 	BLIT_based_sinewave_hardsync_oscillator::BLIT_based_sinewave_hardsync_oscillator()

@@ -226,7 +226,6 @@
     <ClCompile Include="..\vstsdk3\public.sdk\source\vst\vstinitiids.cpp" />
     <ClCompile Include="..\vstsdk3\public.sdk\source\vst\vstparameters.cpp" />
     <ClCompile Include="BLIT_based_sinewave_hardsync_oscillator.cpp" />
-    <ClCompile Include="BLIT_based_sinewave_hardsync_oscillator_note.cpp" />
     <ClCompile Include="BLITSineHardSync_controller.cpp" />
     <ClCompile Include="BLITSineHardSync_entry.cpp" />
     <ClCompile Include="BLITSineHardSync_processor.cpp" />
@@ -264,7 +263,6 @@
     <ClInclude Include="..\vstsdk3\public.sdk\source\vst\vstguieditor.h" />
     <ClInclude Include="..\vstsdk3\public.sdk\source\vst\vstparameters.h" />
     <ClInclude Include="BLIT_based_sinewave_hardsync_oscillator.h" />
-    <ClInclude Include="BLIT_based_sinewave_hardsync_oscillator_note.h" />
     <ClInclude Include="BLITSineHardSync_controller.h" />
     <ClInclude Include="BLITSineHardSync_guids.h" />
     <ClInclude Include="BLITSineHardSync_processor.h" />
