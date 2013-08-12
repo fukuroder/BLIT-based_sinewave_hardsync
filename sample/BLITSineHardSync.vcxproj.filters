@@ -102,7 +102,7 @@
     <ClCompile Include="BLITSineHardSync_entry.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BLIT_based_sinewave_hardsync_oscillator.cpp">
+    <ClCompile Include="BLITSineHardSync_oscillator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -209,7 +209,7 @@
     <ClInclude Include="BLITSineHardSync_processor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BLIT_based_sinewave_hardsync_oscillator.h">
+    <ClInclude Include="BLITSineHardSync_oscillator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

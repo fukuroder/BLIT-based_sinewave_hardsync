@@ -1,6 +1,6 @@
 #pragma once
 #include "public.sdk/source/vst/vstaudioeffect.h"
-#include "BLIT_based_sinewave_hardsync_oscillator.h"
+#include "BLITSineHardSync_oscillator.h"
 #include <array>
 
 namespace Steinberg{ namespace Vst{
