@@ -104,21 +104,33 @@ namespace Steinberg{ namespace Vst{
 		note.t += note.dt;
 		if ( 1.0 <= note.t )note.t -= 1.0;
 
-		// additive section(k=1 -> 2)
-		double additive = _b1*LinearInterpolatedSin(note.t)
-			            + _b2*LinearInterpolatedSin(::fmod( 2*note.t, 1.0 ) );
-
-		// BLIT section(k=3 -> Nyquist limit)
 		if( note.n >= 3)
 		{
+			// update BLIT section(n=3 -> Nyquist limit)
 			note.blit = note.blit*_leak + BLIT(note.t, note.n)*note.dt;
+
+			// update value
+			note.sin = _b1*LinearInterpolatedSin(note.t)
+			         + _b2*LinearInterpolatedSin(::fmod( 2*note.t, 1.0 ) )
+					 + _zzz*note.blit;
+		}
+		else if( note.n == 2 )
+		{
+			// reset BLIT section
+			note.blit = 0.0;
+
+			// update value
+			note.sin = _b1*LinearInterpolatedSin(note.t)
+			         + _b2*LinearInterpolatedSin(::fmod( 2*note.t, 1.0 ) );
 		}
 		else
 		{
+			// reset BLIT section
 			note.blit = 0.0;
-		}
 
-		note.sin = additive + _zzz*note.blit;
+			// update value
+			note.sin = _b1*LinearInterpolatedSin(note.t);
+		}
 	}
 
 }} // namespace
