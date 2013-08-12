@@ -24,7 +24,7 @@ namespace Steinberg{ namespace Vst{
 
 	protected:
 		// sine table
-		std::array<double, (1<<13)+1> _sinTable;
+		std::array<double, (1<<10)+1> _sinTable;
 
 		// leak
 		double _leak;
