@@ -80,7 +80,7 @@ namespace Steinberg{ namespace Vst{
 		double x_numerator1 = LinearInterpolatedSin(::fmod(0.5*t*N1 + 0.25, 1.0));
 
 		int N2 = endN-startN+1;
-		if( t < 1.0e-12 || 1.0 - 1.0e-12 < t )
+		if( t < 1.0e-8 || 1.0 - 1.0e-8 < t )
 		{
 			// apply L'Hopital's rule
 			return x_numerator1*N2;
