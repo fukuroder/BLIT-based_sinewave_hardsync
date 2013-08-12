@@ -30,13 +30,13 @@ namespace Steinberg{ namespace Vst{
 		double _leak;
 
 		//
-		double _zzz;
-
-		//
 		double _b1;
 
 		//
 		double _b2;
+
+		//
+		double _b3;
 
 		// 
 		double LinearInterpolatedSin(double t);

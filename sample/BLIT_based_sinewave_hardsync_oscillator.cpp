@@ -33,7 +33,7 @@ namespace Steinberg{ namespace Vst{
 		{
 			_b1 = -1.0;
 			_b2 = 0.0;
-			_zzz = 0.0;
+			_b3 = 0.0;
 		}
 		else if( value < 2 - 1.0e-12 )
 		{
@@ -42,13 +42,13 @@ namespace Steinberg{ namespace Vst{
 			_b1 =  -2*1*::sin(M_PI*value)/(M_PI*(1+value)*(1-value));
 			_b2 =  -2*2*::sin(M_PI*value)/(M_PI*(2+value)*(2-value));
 			
-			_zzz = -4*::sin(M_PI*value);
+			_b3 = -4*::sin(M_PI*value);
 		}		
 		else
 		{
 			_b1 = 0.0;
 			_b2 = 1.0;
-			_zzz = 0.0;
+			_b3 = 0.0;
 		}
 	}
 
@@ -111,7 +111,7 @@ namespace Steinberg{ namespace Vst{
 			// update value
 			note.sin = _b1*LinearInterpolatedSin(note.t)
 			         + _b2*LinearInterpolatedSin(::fmod( 2*note.t, 1.0 ) )
-					 + _zzz*note.blit;
+					 + _b3*note.blit;
 		}
 		else if( note.n == 2 )
 		{
