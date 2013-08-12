@@ -29,7 +29,6 @@ namespace Steinberg{ namespace Vst{
 	// set slave parameter
 	void BLIT_based_sinewave_hardsync_oscillator::setSlave(double value)
 	{
-		_zzz = -4*::sin(M_PI*value);
 		if( value < 1.0 + 1.0e-12 )
 		{
 			_b1 = -1.0;
