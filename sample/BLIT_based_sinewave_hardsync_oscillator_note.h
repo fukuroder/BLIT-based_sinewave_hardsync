@@ -32,19 +32,19 @@ namespace Steinberg{ namespace Vst{
 		// 
 		void release();
 
-		// 
+		// current position
 		double	t;
 
 		// 
 		double	sin;
 
-		// 
+		// Nyquist limit (round down)
 		unsigned int n;
 
-		//
+		// delta t
 		double	dt;
 
-		
+		// 
 		int srate;
 
 		//
