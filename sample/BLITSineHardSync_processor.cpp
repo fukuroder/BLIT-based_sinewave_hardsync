@@ -125,7 +125,7 @@ namespace Steinberg{ namespace Vst{
 					auto available_note = std::find_if(
 						_notes.begin(),
 						_notes.end(), 
-						[](const BLIT_based_sinewave_hardsync_oscillator_note& n){return n.adsr() == BLIT_based_sinewave_hardsync_oscillator_note::Off;}); 
+						[](const BLITSineHardSync_note& n){return n.adsr() == BLITSineHardSync_note::Off;}); 
 
 					if( available_note != _notes.end() )
 					{
@@ -139,7 +139,7 @@ namespace Steinberg{ namespace Vst{
 					auto target_note = std::find_if(
 						_notes.begin(),
 						_notes.end(), 
-						[note_id](const BLIT_based_sinewave_hardsync_oscillator_note& n){return n.id() == note_id;});
+						[note_id](const BLITSineHardSync_note& n){return n.id() == note_id;});
 
 					if( target_note != _notes.end() )
 					{
@@ -153,7 +153,7 @@ namespace Steinberg{ namespace Vst{
 		bool bAllSilent= std::all_of(
 			_notes.begin(),
 			_notes.end(),
-			[](const BLIT_based_sinewave_hardsync_oscillator_note& n){return n.adsr() == BLIT_based_sinewave_hardsync_oscillator_note::Off;});
+			[](const BLITSineHardSync_note& n){return n.adsr() == BLITSineHardSync_note::Off;});
 
 		if( bAllSilent )
 		{
@@ -171,7 +171,7 @@ namespace Steinberg{ namespace Vst{
 				double value = 0.0;
 				for(auto note = _notes.begin(); note != _notes.end(); ++note)
 				{	
-					if( note->adsr() == BLIT_based_sinewave_hardsync_oscillator_note::Off )continue;
+					if( note->adsr() == BLITSineHardSync_note::Off )continue;
 
 					// add
 					value += note->sin * note->velocity();

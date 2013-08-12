@@ -5,7 +5,7 @@
 namespace Steinberg{ namespace Vst{
 
 	// constructor
-	BLIT_based_sinewave_hardsync_oscillator_note::BLIT_based_sinewave_hardsync_oscillator_note()
+	BLITSineHardSync_note::BLITSineHardSync_note()
 		:_adsr(Off)
 		,t(0.0)
 		,sin(0.0)
@@ -17,19 +17,19 @@ namespace Steinberg{ namespace Vst{
 	}
 
 	//
-	void BLIT_based_sinewave_hardsync_oscillator_note::setSampleRate(int srate)
+	void BLITSineHardSync_note::setSampleRate(int srate)
 	{
 		this->srate = srate;
 	}
 
 	//
-	void BLIT_based_sinewave_hardsync_oscillator_note::release()
+	void BLITSineHardSync_note::release()
 	{
 		_adsr = Off;
 	}
 
 	//
-	void BLIT_based_sinewave_hardsync_oscillator_note::trigger(const NoteOnEvent& noteOn)
+	void BLITSineHardSync_note::trigger(const NoteOnEvent& noteOn)
 	{
 		_noteOn = noteOn; // copy
 		_adsr = On;
@@ -44,13 +44,13 @@ namespace Steinberg{ namespace Vst{
 	}
 
 	//
-	int32 BLIT_based_sinewave_hardsync_oscillator_note::id()const
+	int32 BLITSineHardSync_note::id()const
 	{
 		return _noteOn.noteId;
 	}
 
 	//
-	double BLIT_based_sinewave_hardsync_oscillator_note::velocity()const
+	double BLITSineHardSync_note::velocity()const
 	{
 		return _noteOn.velocity;
 	}
@@ -58,7 +58,7 @@ namespace Steinberg{ namespace Vst{
 	//--------------------------------------------------------------------------
 
 	// constructor
-	BLIT_based_sinewave_hardsync_oscillator::BLIT_based_sinewave_hardsync_oscillator()
+	BLITSineHardSync_oscillator::BLITSineHardSync_oscillator()
 	{
 		// sine wave table
 		for(size_t ii = 0; ii < _sinTable.size()-1; ii++)
@@ -73,13 +73,13 @@ namespace Steinberg{ namespace Vst{
 	}
 
 	// set leak parameter
-	void BLIT_based_sinewave_hardsync_oscillator::setLeak(double value)
+	void BLITSineHardSync_oscillator::setLeak(double value)
 	{
 		_leak = value;
 	}
 
 	// set slave parameter
-	void BLIT_based_sinewave_hardsync_oscillator::setSlave(double value)
+	void BLITSineHardSync_oscillator::setSlave(double value)
 	{
 		if( value < 1.0 + 1.0e-12 )
 		{
@@ -105,7 +105,7 @@ namespace Steinberg{ namespace Vst{
 	}
 
 	// calculate linear-interpolated sine wave
-	double BLIT_based_sinewave_hardsync_oscillator::LinearInterpolatedSin(double x)
+	double BLITSineHardSync_oscillator::LinearInterpolatedSin(double x)
 	{
 		// scale table size
 		double pos = (_sinTable.size()-1) * x;
@@ -121,7 +121,7 @@ namespace Steinberg{ namespace Vst{
 	//-------------
 	// BLIT
 	//-------------
-	double BLIT_based_sinewave_hardsync_oscillator::BLIT( double t, int endN )
+	double BLITSineHardSync_oscillator::BLIT( double t, int endN )
 	{
 		const int startN = 3;
 
@@ -149,7 +149,7 @@ namespace Steinberg{ namespace Vst{
 	//-------------
 	//
 	//-------------
-	void BLIT_based_sinewave_hardsync_oscillator::updateOscillater(BLIT_based_sinewave_hardsync_oscillator_note& note)
+	void BLITSineHardSync_oscillator::updateOscillater(BLITSineHardSync_note& note)
 	{
 		// update t
 		note.t += note.dt;

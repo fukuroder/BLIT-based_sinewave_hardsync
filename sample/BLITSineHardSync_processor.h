@@ -37,10 +37,10 @@ namespace Steinberg{ namespace Vst{
 		};
 
 		// notes
-		std::array<BLIT_based_sinewave_hardsync_oscillator_note, 8> _notes;
+		std::array<BLITSineHardSync_note, 8> _notes;
 
 		//
-		BLIT_based_sinewave_hardsync_oscillator blit;
+		BLITSineHardSync_oscillator blit;
 	};
 
 }} // namespace

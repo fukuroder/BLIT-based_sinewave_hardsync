@@ -5,11 +5,11 @@
 namespace Steinberg{ namespace Vst{
 
 	// note class
-	class BLIT_based_sinewave_hardsync_oscillator_note
+	class BLITSineHardSync_note
 	{
 	public:
 		// constructor
-		BLIT_based_sinewave_hardsync_oscillator_note();
+		BLITSineHardSync_note();
 
 		// note on
 		void trigger(const NoteOnEvent& noteOn);
@@ -66,11 +66,11 @@ namespace Steinberg{ namespace Vst{
 
 
 	// oscillator class
-	class BLIT_based_sinewave_hardsync_oscillator
+	class BLITSineHardSync_oscillator
 	{
 	public:
 		// constructor
-		BLIT_based_sinewave_hardsync_oscillator();
+		BLITSineHardSync_oscillator();
 
 		// leak
 		void setLeak(double value);
@@ -79,7 +79,7 @@ namespace Steinberg{ namespace Vst{
 		void setSlave(double value);
 
 		// update
-		void updateOscillater(BLIT_based_sinewave_hardsync_oscillator_note& note);
+		void updateOscillater(BLITSineHardSync_note& note);
 
 	protected:
 		// sine table
