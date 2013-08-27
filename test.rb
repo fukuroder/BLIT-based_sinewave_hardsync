@@ -6,11 +6,11 @@ leak = 0.995            # [0.99, 1.0)
                         # used for leaky integrator
 slave = 1.2             # [1.0, 2.0]
                         # (slave_freq = master_freq * slave)
-master_freq = 440.0     # master frequency
 t = 0.5                 # current position
 blit_sum = 0.0          # current value for BLIT section
 
 # set frequency...
+master_freq = 440.0                                             # master frequency
 n = (sample_rate/2/master_freq).to_i                            # Nyquist limit (round down)
 dt = master_freq/sample_rate                                    # delta t
 b1 = -2*Math.sin(Math::PI*slave)/(Math::PI*(1+slave)*(1-slave)) # Fourier coefficient for sin(2*PI*1*t)
