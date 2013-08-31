@@ -21,9 +21,8 @@ namespace Steinberg{ namespace Vst{
 			SpeakerArrangement* inputs,
 			int32 numIns,
 			SpeakerArrangement* outputs,
-			int32 numOuts
-			);
-		virtual tresult PLUGIN_API setProcessing (TBool state);
+			int32 numOuts);
+		virtual tresult PLUGIN_API setProcessing(TBool state);
 		virtual tresult PLUGIN_API process(ProcessData& data);
 
 	protected:
@@ -32,15 +31,14 @@ namespace Steinberg{ namespace Vst{
 		enum
 		{
 			Leak,
-			Slave,
-			N
+			Slave
 		};
 
 		// notes
 		std::array<BLITSineHardSync_note, 8> _notes;
 
-		//
-		BLITSineHardSync_oscillator blit;
+		// oscillator
+		BLITSineHardSync_oscillator _blit;
 	};
 
 }} // namespace

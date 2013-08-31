@@ -20,10 +20,11 @@ namespace Steinberg{ namespace Vst{
 		// 
 		double velocity()const;
 
-		// ADSR.
-		enum ADSR{
+		// ADSR
+		enum ADSR
+		{
 			Off,
-			On,
+			On
 		};
 
 		//
@@ -33,16 +34,16 @@ namespace Steinberg{ namespace Vst{
 		void release();
 
 		// current position
-		double	t;
+		double t;
 
 		// 
-		double	sin;
+		double sin;
 
 		// Nyquist limit (round down)
 		unsigned int n;
 
 		// delta t
-		double	dt;
+		double dt;
 
 		// 
 		int srate;
@@ -50,7 +51,7 @@ namespace Steinberg{ namespace Vst{
 		//
 		double blit;
 
-		ADSR adsr()const{return _adsr;};
+		ADSR adsr()const;
 
 	protected:
 
@@ -88,13 +89,13 @@ namespace Steinberg{ namespace Vst{
 		// leak
 		double _leak;
 
-		//
+		// Fourier coefficient for sin(2*PI*1*t)
 		double _b1;
 
-		//
+		// Fourier coefficient for sin(2*PI*2*t)
 		double _b2;
 
-		//
+		// used for BLIT section
 		double _b3;
 
 		// 

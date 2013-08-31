@@ -22,6 +22,8 @@ namespace Steinberg{ namespace Vst{
 	{
 	public:
 		BLITSineHardSync_LeakParameter();
+
+		// from Parameter class
 		virtual void toString(ParamValue normValue, String128 string)const;
 	};
 
@@ -30,6 +32,8 @@ namespace Steinberg{ namespace Vst{
 	{
 	public:
 		BLITSineHardSync_SlaveParameter();
+
+		// from Parameter class
 		virtual void toString(ParamValue normValue, String128 string)const;
 	};
 

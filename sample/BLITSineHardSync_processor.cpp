@@ -93,13 +93,13 @@ namespace Steinberg{ namespace Vst{
 						{
 							// -> [0.99, 1.0]
 							double value = 0.99 + 0.01 * valueNormalized;  
-							blit.setLeak(value);
+							_blit.setLeak(value);
 						}
 						else if( id == Slave )
 						{
 							// -> [1.0, 2.0]
 							double value = 1.0 + valueNormalized;  
-							blit.setSlave(value);
+							_blit.setSlave(value);
 						}
 					}
 				}
@@ -177,7 +177,7 @@ namespace Steinberg{ namespace Vst{
 					value += note->sin * note->velocity();
 
 					// update oscillater
-					blit.updateOscillater( *note );
+					_blit.updateOscillater( *note );
 				}
 
 				// set output buffer

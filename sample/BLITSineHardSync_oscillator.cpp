@@ -29,6 +29,12 @@ namespace Steinberg{ namespace Vst{
 	}
 
 	//
+	BLITSineHardSync_note::ADSR BLITSineHardSync_note::adsr()const
+	{
+		return _adsr;
+	}
+
+	//
 	void BLITSineHardSync_note::trigger(const NoteOnEvent& noteOn)
 	{
 		_noteOn = noteOn; // copy
@@ -91,9 +97,8 @@ namespace Steinberg{ namespace Vst{
 		{
 			// _b[n] = -2*n*::sin(M_PI*value)/(M_PI*(n+value)*(n-value));
 
-			_b1 =  -2*1*::sin(M_PI*value)/(M_PI*(1+value)*(1-value));
-			_b2 =  -2*2*::sin(M_PI*value)/(M_PI*(2+value)*(2-value));
-			
+			_b1 = -2*1*::sin(M_PI*value)/(M_PI*(1+value)*(1-value));
+			_b2 = -2*2*::sin(M_PI*value)/(M_PI*(2+value)*(2-value));
 			_b3 = -4*::sin(M_PI*value);
 		}		
 		else
@@ -118,9 +123,7 @@ namespace Steinberg{ namespace Vst{
 		return (1.0-s)*_sinTable[idx_A] + s*_sinTable[idx_A+1];
 	}
 
-	//-------------
-	// BLIT
-	//-------------
+	// BLIT ?
 	double BLITSineHardSync_oscillator::BLIT( double t, int endN )
 	{
 		const int startN = 3;
@@ -146,9 +149,7 @@ namespace Steinberg{ namespace Vst{
 		}
 	}
 
-	//-------------
 	//
-	//-------------
 	void BLITSineHardSync_oscillator::updateOscillater(BLITSineHardSync_note& note)
 	{
 		// update t
