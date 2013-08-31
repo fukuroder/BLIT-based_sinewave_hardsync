@@ -37,7 +37,7 @@ b3 = -4*Math.sin(Math::PI*slave)                                # used for BLIT 
     # update position
     t += dt
     
-    # update BLIT
+    # update BLIT (dividing by zero is not considered!)
     blit_sum = leak*blit_sum \
              + Math.cos((n+3)*Math::PI*t)*Math.sin((n-3+1)*Math::PI*t)/Math.sin(Math::PI*t)*dt
 end
