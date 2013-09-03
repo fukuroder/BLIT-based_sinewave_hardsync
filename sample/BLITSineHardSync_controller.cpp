@@ -1,7 +1,6 @@
 #include "BLITSineHardSync_controller.h"
-#include "vstgui/plugin-bindings/vst3editor.h"
 #include "pluginterfaces/base/ibstream.h"
-#include <math.h>
+#include <stdio.h>
 
 namespace Steinberg{ namespace Vst{
 
