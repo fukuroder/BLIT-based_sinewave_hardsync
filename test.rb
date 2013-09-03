@@ -11,7 +11,7 @@ blit_sum = 0.0          # current value for BLIT section
 
 # set frequency...
 master_freq = 440.0                                             # master frequency
-n = (sample_rate/2/master_freq).to_i                            # Nyquist limit (round down)
+n = (sample_rate/2/master_freq).truncate                        # Nyquist limit (round down)
 dt = master_freq/sample_rate                                    # delta t
 b1 = -2*Math.sin(Math::PI*slave)/(Math::PI*(1+slave)*(1-slave)) # Fourier coefficient for sin(2*PI*1*t)
 b2 = -4*Math.sin(Math::PI*slave)/(Math::PI*(2+slave)*(2-slave)) # Fourier coefficient for sin(2*PI*2*t)
