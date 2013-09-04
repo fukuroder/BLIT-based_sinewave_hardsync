@@ -11,6 +11,13 @@ namespace Steinberg{ namespace Vst{
 		// constructor
 		BLITSineHardSync_note();
 
+		// ADSR
+		enum ADSR
+		{
+			Off,
+			On
+		};
+
 		// note on
 		void trigger(const NoteOnEvent& noteOn);
 
@@ -19,13 +26,6 @@ namespace Steinberg{ namespace Vst{
 
 		// 
 		double velocity()const;
-
-		// ADSR
-		enum ADSR
-		{
-			Off,
-			On
-		};
 
 		//
 		void setSampleRate(int srate);
@@ -51,6 +51,7 @@ namespace Steinberg{ namespace Vst{
 		//
 		double blit;
 
+		//
 		ADSR adsr()const;
 
 	protected:
@@ -99,10 +100,10 @@ namespace Steinberg{ namespace Vst{
 		double _b3;
 
 		// 
-		double LinearInterpolatedSin(double t);
+		double LinearInterpolatedSin(double t)const;
 
 		// 
-		double BLIT(double t, int endN);
+		double BLIT(double t, int N)const;
 	};
 
 }} // namespace

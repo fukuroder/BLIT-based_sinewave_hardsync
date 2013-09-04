@@ -110,7 +110,7 @@ namespace Steinberg{ namespace Vst{
 	}
 
 	// calculate linear-interpolated sine wave
-	double BLITSineHardSync_oscillator::LinearInterpolatedSin(double x)
+	double BLITSineHardSync_oscillator::LinearInterpolatedSin(double x)const
 	{
 		// scale table size
 		double pos = (_sinTable.size()-1) * x;
@@ -124,28 +124,24 @@ namespace Steinberg{ namespace Vst{
 	}
 
 	// BLIT ?
-	double BLITSineHardSync_oscillator::BLIT( double t, int endN )
+	double BLITSineHardSync_oscillator::BLIT(double t, int N)const
 	{
-		const int startN = 3;
+		int N1 = N+3;
+		double cos1 = LinearInterpolatedSin(::fmod(0.5*t*N1+0.25, 1.0));
 
-		// denominator
-		double x_denominator = LinearInterpolatedSin( 0.5*t );
+		int N2 = N-3+1;
+		double sin1 = LinearInterpolatedSin(::fmod(0.5*t*N2, 1.0));
 
-		int N1 = endN+startN;
-		double x_numerator1 = LinearInterpolatedSin(::fmod(0.5*t*N1 + 0.25, 1.0));
+		double sin2 = LinearInterpolatedSin(0.5*t);
 
-		int N2 = endN-startN+1;
-		if( t < 1.0e-8 || 1.0 - 1.0e-8 < t )
-		{
-			// apply L'Hopital's rule
-			return x_numerator1*N2;
+		if( (1.0e-8) < t && t < 1.0-(1.0e-8) )
+		{		
+			return cos1*sin1/sin2;
 		}
 		else
 		{
-			// numerator
-			double x_numerator2 = LinearInterpolatedSin(::fmod(0.5*t*N2, 1.0));
-
-			return x_numerator1*x_numerator2/x_denominator;
+			// apply L'Hopital's rule
+			return cos1*N2;
 		}
 	}
 
@@ -163,7 +159,7 @@ namespace Steinberg{ namespace Vst{
 
 			// update value
 			note.sin = _b1*LinearInterpolatedSin(note.t)
-			         + _b2*LinearInterpolatedSin(::fmod( 2*note.t, 1.0 ) )
+			         + _b2*LinearInterpolatedSin(::fmod(2*note.t, 1.0))
 					 + _b3*note.blit;
 		}
 		else if( note.n == 2 )
@@ -173,7 +169,7 @@ namespace Steinberg{ namespace Vst{
 
 			// update value
 			note.sin = _b1*LinearInterpolatedSin(note.t)
-			         + _b2*LinearInterpolatedSin(::fmod( 2*note.t, 1.0 ) );
+			         + _b2*LinearInterpolatedSin(::fmod(2*note.t, 1.0));
 		}
 		else
 		{
