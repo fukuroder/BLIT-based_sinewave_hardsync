@@ -141,7 +141,7 @@ namespace Steinberg{ namespace Vst{
 		else
 		{
 			// apply L'Hopital's rule
-			return cos1*N2;
+			return N2;
 		}
 	}
 
