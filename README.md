@@ -5,7 +5,7 @@
 - - -
 
 ### Algorithm
-This wave is constructed with additive synthesis and BLIT synthesis.
+This waveform is constructed with additive synthesis and BLIT synthesis.
 
 ![Figure1](https://raw.github.com/fukuroder/BLIT-based_sinewave_hardsync/master/figure1.png)
 
@@ -46,4 +46,4 @@ end
 - - -
 
 ### Implementation by Reaktor
-* [BLIT-based sinewave hardsync](https://co.native-instruments.com/index.php?id=userlibrary&type=0&ulbr=1&plview=detail&patchid=13180)
+* [BLIT-based sinewave hardsync](https://co.native-instruments.com/index.php?id=userlibrary&type=0&ulbr=1&plview=detail&patchid=13267)
