@@ -105,6 +105,21 @@
     <ClCompile Include="BLITSineHardSync_oscillator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\vstsdk3\pluginterfaces\base\conststringtable.cpp">
+      <Filter>Source Files\vst3\pluginterfaces\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vstsdk3\public.sdk\source\common\memorystream.cpp">
+      <Filter>Source Files\vst3\public.sdk\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vstsdk3\public.sdk\source\vst\vstnoteexpressiontypes.cpp">
+      <Filter>Source Files\vst3\public.sdk\vst</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vstsdk3\public.sdk\source\vst\vstpresetfile.cpp">
+      <Filter>Source Files\vst3\public.sdk\vst</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vstsdk3\public.sdk\source\vst\vstrepresentation.cpp">
+      <Filter>Source Files\vst3\public.sdk\vst</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\vstsdk3\pluginterfaces\vst\ivstattributes.h">
@@ -211,6 +226,66 @@
     </ClInclude>
     <ClInclude Include="BLITSineHardSync_oscillator.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vstsdk3\pluginterfaces\base\conststringtable.h">
+      <Filter>Header Files\vst3\pluginterfaces\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vstsdk3\pluginterfaces\base\fstrdefs.h">
+      <Filter>Header Files\vst3\pluginterfaces\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vstsdk3\pluginterfaces\base\futils.h">
+      <Filter>Header Files\vst3\pluginterfaces\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vstsdk3\pluginterfaces\base\ibstream.h">
+      <Filter>Header Files\vst3\pluginterfaces\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vstsdk3\pluginterfaces\base\icloneable.h">
+      <Filter>Header Files\vst3\pluginterfaces\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vstsdk3\pluginterfaces\base\ierrorcontext.h">
+      <Filter>Header Files\vst3\pluginterfaces\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vstsdk3\pluginterfaces\base\ipersistent.h">
+      <Filter>Header Files\vst3\pluginterfaces\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vstsdk3\pluginterfaces\base\istringresult.h">
+      <Filter>Header Files\vst3\pluginterfaces\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vstsdk3\pluginterfaces\base\iupdatehandler.h">
+      <Filter>Header Files\vst3\pluginterfaces\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vstsdk3\pluginterfaces\vst\ivstcontextmenu.h">
+      <Filter>Header Files\vst3\pluginterfaces\vst</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vstsdk3\pluginterfaces\vst\ivstinterappaudio.h">
+      <Filter>Header Files\vst3\pluginterfaces\vst</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vstsdk3\pluginterfaces\vst\ivstnoteexpression.h">
+      <Filter>Header Files\vst3\pluginterfaces\vst</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vstsdk3\pluginterfaces\vst\ivstplugview.h">
+      <Filter>Header Files\vst3\pluginterfaces\vst</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vstsdk3\pluginterfaces\vst\ivstrepresentation.h">
+      <Filter>Header Files\vst3\pluginterfaces\vst</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vstsdk3\pluginterfaces\vst\vstpshpack4.h">
+      <Filter>Header Files\vst3\pluginterfaces\vst</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vstsdk3\public.sdk\source\common\memorystream.h">
+      <Filter>Header Files\vst3\public.sdk\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vstsdk3\public.sdk\source\vst\vstnoteexpressiontypes.h">
+      <Filter>Header Files\vst3\public.sdk\vst</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vstsdk3\public.sdk\source\vst\vstpresetfile.h">
+      <Filter>Header Files\vst3\public.sdk\vst</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vstsdk3\public.sdk\source\vst\vstrepresentation.h">
+      <Filter>Header Files\vst3\public.sdk\vst</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vstsdk3\public.sdk\source\vst\vstsinglecomponenteffect.h">
+      <Filter>Header Files\vst3\public.sdk\vst</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
