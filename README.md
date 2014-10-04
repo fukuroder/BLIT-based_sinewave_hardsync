@@ -46,4 +46,4 @@ end
 - - -
 
 ### Implementation by Reaktor
-* [BLIT-based sinewave hardsync](https://co.native-instruments.com/index.php?id=userlibrary&type=0&ulbr=1&plview=detail&patchid=13267)
+* [BLIT-based sinewave hardsync](http://www.native-instruments.com/jp/community/reaktor-user-library/entry/show/7639/)
