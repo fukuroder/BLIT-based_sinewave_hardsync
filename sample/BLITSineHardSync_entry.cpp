@@ -3,6 +3,8 @@
 #include "BLITSineHardSync_guids.h"
 #include "public.sdk/source/main//pluginfactoryvst3.h"
 
+using namespace Steinberg;
+
 // 
 bool InitModule()
 {
@@ -17,7 +19,8 @@ bool DeinitModule()
 	return true;
 }
 
-namespace Steinberg{ namespace Vst{
+namespace MyVst{
+
 // define factory
 BEGIN_FACTORY_DEF(
 	"fukuroda",							// vendor
@@ -49,4 +52,4 @@ BEGIN_FACTORY_DEF(
 		BLITSineHardSync_controller::create)				// create method
 
 END_FACTORY
-}} // namespace
+} // namespace
