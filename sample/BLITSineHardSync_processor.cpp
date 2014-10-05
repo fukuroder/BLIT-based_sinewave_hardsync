@@ -31,7 +31,6 @@ tresult PLUGIN_API BLITSineHardSync_processor::initialize(FUnknown* context)
 
 	// set bus
 	addAudioOutput(STR16("Stereo Out"), SpeakerArr::kStereo);
-	addEventInput (STR16 ("Event Input"), 1);
 
 	return kResultOk;
 }
