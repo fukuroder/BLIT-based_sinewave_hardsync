@@ -21,14 +21,14 @@ bool DeinitModule()
 
 namespace MyVst{
 
-// define factory
-BEGIN_FACTORY_DEF(
-	"fukuroda",							// vendor
-	"https://github.com/fukuroder",		// url
-	"mailto:fukuroder@live.jp")			// e-mail
+	// define factory
+	BEGIN_FACTORY_DEF(
+		"fukuroda",							// vendor
+		"https://github.com/fukuroder",		// url
+		"mailto:fukuroder@live.jp")			// e-mail
 
-	// register processor
-	DEF_CLASS2(
+		// register processor
+		DEF_CLASS2(
 		INLINE_UID_FROM_FUID(BLITSineHardSyncProcessorID),	// processor's GUID
 		PClassInfo::kManyInstances,							// ?
 		kVstAudioEffectClass,								// category
@@ -39,8 +39,8 @@ BEGIN_FACTORY_DEF(
 		kVstVersionString,									// VSTSDK version
 		BLITSineHardSync_processor::create)					// create method
 
-	// register controller
-	DEF_CLASS2(
+		// register controller
+		DEF_CLASS2(
 		INLINE_UID_FROM_FUID(BLITSineHardSyncControllerID),	// controller's GUID
 		PClassInfo::kManyInstances,							// ?
 		kVstComponentControllerClass,						// category
@@ -51,5 +51,5 @@ BEGIN_FACTORY_DEF(
 		kVstVersionString,									// create method
 		BLITSineHardSync_controller::create)				// create method
 
-END_FACTORY
+	END_FACTORY
 } // namespace
