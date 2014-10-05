@@ -24,7 +24,6 @@ public:
 		int32 numIns,
 		SpeakerArrangement* outputs,
 		int32 numOuts);
-	virtual tresult PLUGIN_API setProcessing(TBool state);
 	virtual tresult PLUGIN_API process(ProcessData& data);
 
 protected:

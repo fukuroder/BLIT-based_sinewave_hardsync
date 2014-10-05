@@ -6,20 +6,13 @@ namespace MyVst{
 
 // constructor
 BLITSineHardSync_note::BLITSineHardSync_note()
-	:_adsr(Off)
-	,t(0.0)
-	,sin(0.0)
-	,blit(0.0)
-	,n(0)
-	,dt(0.0)
-	,srate(44100)
+:_adsr(Off)
+, t(0.0)
+, sin(0.0)
+, blit(0.0)
+, n(0)
+, dt(0.0)
 {
-}
-
-//
-void BLITSineHardSync_note::setSampleRate(int srate)
-{
-	this->srate = srate;
 }
 
 //
@@ -35,17 +28,17 @@ BLITSineHardSync_note::ADSR BLITSineHardSync_note::adsr()const
 }
 
 //
-void BLITSineHardSync_note::trigger(const NoteOnEvent& noteOn)
+void BLITSineHardSync_note::trigger(const NoteOnEvent& noteOn, double srate)
 {
 	_noteOn = noteOn; // copy
 	_adsr = On;
+	blit = 0.0;
+	sin = 0.0;
 
 	//
 	double freq = 440.0*( ::pow(2.0, (_noteOn.pitch - _note_no_center)/12.0 ));
 	n = static_cast<int>(srate / 2.0 / freq);
 	t = 0.5;
-	blit = 0.0;
-	sin = 0.0;
 	dt = freq / srate;
 }
 

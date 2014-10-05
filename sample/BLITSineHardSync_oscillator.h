@@ -21,7 +21,7 @@ public:
 	};
 
 	// note on
-	void trigger(const NoteOnEvent& noteOn);
+	void trigger(const NoteOnEvent& noteOn, double srate);
 
 	// 
 	int32 id()const;
@@ -46,9 +46,6 @@ public:
 
 	// delta t
 	double dt;
-
-	// 
-	int srate;
 
 	//
 	double blit;

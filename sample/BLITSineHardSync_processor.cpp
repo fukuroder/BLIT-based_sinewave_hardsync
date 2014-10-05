@@ -50,22 +50,6 @@ tresult PLUGIN_API BLITSineHardSync_processor::setBusArrangements(
 }
 
 //
-tresult PLUGIN_API BLITSineHardSync_processor::setProcessing (TBool state)
-{
-	if( state == 1)
-	{
-		// setup
-		for(auto note = _notes.begin(); note != _notes.end(); ++note)
-		{
-			// set sample rate
-			note->setSampleRate( processSetup.sampleRate );
-		}
-	}
-
-	return kResultOk;
-}
-
-//
 tresult PLUGIN_API BLITSineHardSync_processor::process(ProcessData& data)
 {
 	//-------------------
@@ -127,7 +111,7 @@ tresult PLUGIN_API BLITSineHardSync_processor::process(ProcessData& data)
 				if( available_note != _notes.end() )
 				{
 					// note on
-					available_note->trigger( e.noteOn );
+					available_note->trigger(e.noteOn, processSetup.sampleRate);
 				}
 			}
 			else if( e.type == Event::kNoteOffEvent )
@@ -158,27 +142,27 @@ tresult PLUGIN_API BLITSineHardSync_processor::process(ProcessData& data)
 	}
 
 	// 
-	if (data.numInputs == 0 && data.numOutputs == 1 && data.outputs[0].numChannels == 2 )
+	if (data.numInputs == 0 && data.numOutputs == 1 && data.outputs[0].numChannels == 2)
 	{
-		float** out = data.outputs[0].channelBuffers32;
+		Sample32** out = data.outputs[0].channelBuffers32;
 
 		const int32 sampleFrames = data.numSamples;
-		for( int ii = 0; ii < sampleFrames; ii++ )
+		for (int ii = 0; ii < sampleFrames; ii++)
 		{
 			double value = 0.0;
-			for(auto note = _notes.begin(); note != _notes.end(); ++note)
-			{	
-				if( note->adsr() == BLITSineHardSync_note::Off )continue;
+			for (auto& note : _notes)
+			{
+				if (note.adsr() == BLITSineHardSync_note::Off)continue;
 
 				// add
-				value += note->sin * note->velocity();
+				value += note.sin * note.velocity();
 
 				// update oscillater
-				_blit.updateOscillater( *note );
+				_blit.updateOscillater(note);
 			}
 
 			// set output buffer
-			out[0][ii] = out[1][ii] = static_cast<float>( value );
+			out[0][ii] = out[1][ii] = static_cast<Sample32>(value);
 		}
 	}
 	return kResultOk;
