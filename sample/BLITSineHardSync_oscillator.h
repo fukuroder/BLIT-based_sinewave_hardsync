@@ -15,52 +15,40 @@ namespace MyVst{
 		// ADSR
 		enum ADSR
 		{
+			//
 			Off,
-			On
+
+			//
+			On,
 		};
 
-		// note on
-		void trigger(const NoteOnEvent& noteOn, double srate);
-
-		// 
-		int32 id()const;
-
-		// 
-		double velocity()const;
+		//
+		ADSR envelope;
 
 		//
-		void setSampleRate(int srate);
-
-		// 
-		void release();
-
-		// current position
 		double t;
 
 		// 
 		double sin;
 
-		// Nyquist limit (round down)
-		unsigned int n;
-
-		// delta t
-		double dt;
-
 		//
 		double blit;
 
 		//
-		ADSR adsr()const;
+		int n;
+
+		//
+		double dt;
+
+		//
+		int32 note_id;
+
+		//
+		double velocity;
 
 	protected:
 
-		// ADSR
-		ADSR _adsr;
-
 		//
-		NoteOnEvent _noteOn;
-
-		// 
 		static const int _note_no_center = 69;
 	};
 
@@ -78,10 +66,29 @@ namespace MyVst{
 		// slave
 		void setSlave(double value);
 
-		// update
-		void updateOscillater(BLITSineHardSync_note& note);
+		//
+		void trigger(const NoteOnEvent& noteOn, double srate);
+
+		//
+		void release(const NoteOffEvent& noteOff);
+
+		//
+		bool is_silent();
+
+		//
+		double render();
+
+		//
+		void next();
 
 	protected:
+
+		//
+		static const int _note_no_center = 69;
+
+		//
+		std::array<BLITSineHardSync_note, 8> _notes;
+
 		// sine table
 		std::array<double, (1 << 10) + 1> _sinTable;
 
@@ -98,9 +105,9 @@ namespace MyVst{
 		double _b3;
 
 		// 
-		double LinearInterpolatedSin(double t)const;
+		double LinearInterpolatedSin(double x)const;
 
 		// 
-		double BLIT(double t, int N)const;
+		double BLIT(double t, int n)const;
 	};
 } // namespace

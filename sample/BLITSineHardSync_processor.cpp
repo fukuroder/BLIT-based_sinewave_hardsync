@@ -99,67 +99,29 @@ namespace MyVst{
 
 				if (e.type == Event::kNoteOnEvent)
 				{
-					// find available note
-					auto available_note = std::find_if(
-						_notes.begin(),
-						_notes.end(),
-						[](const BLITSineHardSync_note& n){return n.adsr() == BLITSineHardSync_note::Off; });
-
-					if (available_note != _notes.end())
-					{
-						// note on
-						available_note->trigger(e.noteOn, processSetup.sampleRate);
-					}
+					_blit.trigger(e.noteOn, processSetup.sampleRate);
 				}
 				else if (e.type == Event::kNoteOffEvent)
 				{
-					int32 note_id = e.noteOff.noteId;
-					auto target_note = std::find_if(
-						_notes.begin(),
-						_notes.end(),
-						[note_id](const BLITSineHardSync_note& n){return n.id() == note_id; });
-
-					if (target_note != _notes.end())
-					{
-						// note off
-						target_note->release();
-					}
+					_blit.release(e.noteOff);
 				}
 			}
 		}
 
-		bool bAllSilent = std::all_of(
-			_notes.begin(),
-			_notes.end(),
-			[](const BLITSineHardSync_note& n){return n.adsr() == BLITSineHardSync_note::Off; });
-
-		if (bAllSilent)
+		if (_blit.is_silent())
 		{
 			return kResultOk;
 		}
 
-		// 
+		//
 		if (data.numInputs == 0 && data.numOutputs == 1 && data.outputs[0].numChannels == 2)
 		{
 			Sample32** out = data.outputs[0].channelBuffers32;
-
 			const int32 sampleFrames = data.numSamples;
 			for (int ii = 0; ii < sampleFrames; ii++)
 			{
-				double value = 0.0;
-				for (auto& note : _notes)
-				{
-					if (note.adsr() == BLITSineHardSync_note::Off)continue;
-
-					// add
-					value += note.sin * note.velocity();
-
-					// update oscillater
-					_blit.updateOscillater(note);
-				}
-
-				// set output buffer
-				out[0][ii] = out[1][ii] = static_cast<Sample32>(value);
+				out[0][ii] = out[1][ii] = _blit.render();
+				_blit.next();
 			}
 		}
 		return kResultOk;

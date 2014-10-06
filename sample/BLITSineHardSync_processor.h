@@ -34,9 +34,6 @@ namespace MyVst{
 			Slave
 		};
 
-		// notes
-		std::array<BLITSineHardSync_note, 8> _notes;
-
 		// oscillator
 		BLITSineHardSync_oscillator _blit;
 	};

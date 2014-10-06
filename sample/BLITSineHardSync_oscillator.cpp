@@ -5,7 +5,7 @@
 namespace MyVst{
 	// constructor
 	BLITSineHardSync_note::BLITSineHardSync_note()
-		:_adsr(Off)
+		:envelope(Off)
 		, t(0.0)
 		, sin(0.0)
 		, blit(0.0)
@@ -14,56 +14,61 @@ namespace MyVst{
 	{
 	}
 
-	//
-	void BLITSineHardSync_note::release()
-	{
-		_adsr = Off;
-	}
 
-	//
-	BLITSineHardSync_note::ADSR BLITSineHardSync_note::adsr()const
+	void BLITSineHardSync_oscillator::trigger(const NoteOnEvent& noteOn, double srate)
 	{
-		return _adsr;
-	}
-
-	//
-	void BLITSineHardSync_note::trigger(const NoteOnEvent& noteOn, double srate)
-	{
-		_noteOn = noteOn; // copy
-		_adsr = On;
-		blit = 0.0;
-		sin = 0.0;
-
 		//
-		double freq = 440.0*(::pow(2.0, (_noteOn.pitch - _note_no_center) / 12.0));
-		n = static_cast<int>(srate / 2.0 / freq);
-		t = 0.5;
-		dt = freq / srate;
+		auto available_note = std::find_if(
+			_notes.begin(),
+			_notes.end(),
+			[](const BLITSineHardSync_note& n){return n.envelope == BLITSineHardSync_note::Off; });
+
+		if (available_note != _notes.end()){
+			available_note->note_id = noteOn.noteId;
+			available_note->velocity = noteOn.velocity;
+			available_note->envelope = BLITSineHardSync_note::On;
+
+			//
+			double freq = 440.0*(::pow(2.0, (noteOn.pitch - _note_no_center) / 12.0));
+			available_note->n = static_cast<int>(srate / 2.0 / freq);
+			available_note->dt = freq / srate;
+			available_note->blit = 0.0;
+			available_note->sin = 0.0;
+			available_note->t = 0.5;
+		}
 	}
 
 	//
-	int32 BLITSineHardSync_note::id()const
+	void BLITSineHardSync_oscillator::release(const NoteOffEvent& noteOff)
 	{
-		return _noteOn.noteId;
+		const int32 note_id = noteOff.noteId;
+		auto target_note = std::find_if(
+			_notes.begin(),
+			_notes.end(),
+			[note_id](const BLITSineHardSync_note& n){return n.note_id == note_id; });
+
+		if (target_note != _notes.end()){
+			//
+			target_note->envelope = BLITSineHardSync_note::Off;
+		}
 	}
 
-	//
-	double BLITSineHardSync_note::velocity()const
+	bool BLITSineHardSync_oscillator::is_silent()
 	{
-		return _noteOn.velocity;
+		return std::all_of(
+			_notes.begin(),
+			_notes.end(),
+			[](const BLITSineHardSync_note& n){return n.envelope == BLITSineHardSync_note::Off; });
 	}
-
-	//--------------------------------------------------------------------------
 
 	// constructor
 	BLITSineHardSync_oscillator::BLITSineHardSync_oscillator()
 	{
 		// sine wave table
-		for (size_t ii = 0; ii < _sinTable.size() - 1; ii++)
+		for (size_t ii = 0; ii < _sinTable.size(); ii++)
 		{
 			_sinTable[ii] = sin(2.0*M_PI * ii / (_sinTable.size() - 1));
 		}
-		_sinTable.back() = 0.0;
 
 		// initialize parameter
 		setLeak(0.995);
@@ -137,39 +142,57 @@ namespace MyVst{
 		}
 	}
 
-	//
-	void BLITSineHardSync_oscillator::updateOscillater(BLITSineHardSync_note& note)
+	double BLITSineHardSync_oscillator::render()
 	{
-		// update t
-		note.t += note.dt;
-		if (1.0 <= note.t)note.t -= 1.0;
-
-		if (note.n >= 3)
+		double value = 0.0;
+		for (auto &note : _notes)
 		{
-			// update BLIT section(n=3 -> Nyquist limit)
-			note.blit = note.blit*_leak + BLIT(note.t, note.n)*note.dt;
-
-			// update value
-			note.sin = _b1*LinearInterpolatedSin(note.t)
-				+ _b2*LinearInterpolatedSin(::fmod(2 * note.t, 1.0))
-				+ _b3*note.blit;
+			if (note.envelope == BLITSineHardSync_note::On){
+				// add
+				value += note.sin * note.velocity;
+			}
 		}
-		else if (note.n == 2)
-		{
-			// reset BLIT section
-			note.blit = 0.0;
+		return value;
+	}
 
-			// update value
-			note.sin = _b1*LinearInterpolatedSin(note.t)
-				+ _b2*LinearInterpolatedSin(::fmod(2 * note.t, 1.0));
-		}
-		else
+	//
+	void BLITSineHardSync_oscillator::next()
+	{
+		for (auto& note : _notes)
 		{
-			// reset BLIT section
-			note.blit = 0.0;
-
-			// update value
-			note.sin = _b1*LinearInterpolatedSin(note.t);
+			if (note.envelope == BLITSineHardSync_note::On){
+				// update t
+				note.t += note.dt;
+				if (1.0 <= note.t)note.t -= 1.0;
+		
+				if (note.n >= 3)
+				{
+					// update BLIT section(n=3 -> Nyquist limit)
+					note.blit = note.blit*_leak + BLIT(note.t, note.n)*note.dt;
+		
+					// update value
+					note.sin = _b1*LinearInterpolatedSin(note.t)
+						+ _b2*LinearInterpolatedSin(::fmod(2 * note.t, 1.0))
+						+ _b3*note.blit;
+				}
+				else if (note.n == 2)
+				{
+					// reset BLIT section
+					note.blit = 0.0;
+		
+					// update value
+					note.sin = _b1*LinearInterpolatedSin(note.t)
+						+ _b2*LinearInterpolatedSin(::fmod(2 * note.t, 1.0));
+				}
+				else
+				{
+					// reset BLIT section
+					note.blit = 0.0;
+		
+					// update value
+					note.sin = _b1*LinearInterpolatedSin(note.t);
+				}
+			}
 		}
 	}
 } // namespace
