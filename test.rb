@@ -1,4 +1,11 @@
+# coding: utf-8
+
+#------------------------------------------------------------
 # test.rb
+#
+# Copyright (c) 2014, fukuroda (https://github.com/fukuroder)
+# Released under the MIT license
+#------------------------------------------------------------
 
 # initialize...
 sample_rate = 44100.0   # sample rate
