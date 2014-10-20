@@ -1,3 +1,10 @@
+/*
+ * BLITSineHardSync_oscillator.cpp
+ *
+ * Copyright (c) 2014, fukuroda (https://github.com/fukuroder)
+ * Released under the MIT license
+ */
+
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include "BLITSineHardSync_oscillator.h"
@@ -14,7 +21,7 @@ namespace MyVst{
 	{
 	}
 
-
+	//
 	void BLITSineHardSync_oscillator::trigger(const NoteOnEvent& noteOn, double srate)
 	{
 		//
@@ -53,6 +60,7 @@ namespace MyVst{
 		}
 	}
 
+	//
 	bool BLITSineHardSync_oscillator::is_silent()
 	{
 		return std::all_of(
@@ -142,6 +150,7 @@ namespace MyVst{
 		}
 	}
 
+	//
 	double BLITSineHardSync_oscillator::render()
 	{
 		double value = 0.0;

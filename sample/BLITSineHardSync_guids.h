@@ -1,3 +1,10 @@
+/*
+ * BLITSineHardSync_guids.h
+ *
+ * Copyright (c) 2014, fukuroda (https://github.com/fukuroder)
+ * Released under the MIT license
+ */
+
 #pragma once
 #include "pluginterfaces/base/funknown.h"
 

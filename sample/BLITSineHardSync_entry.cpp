@@ -1,3 +1,10 @@
+/*
+ * BLITSineHardSync_entry.cpp
+ *
+ * Copyright (c) 2014, fukuroda (https://github.com/fukuroder)
+ * Released under the MIT license
+ */
+
 #include "BLITSineHardSync_processor.h"
 #include "BLITSineHardSync_controller.h"
 #include "BLITSineHardSync_guids.h"

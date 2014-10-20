@@ -1,3 +1,10 @@
+/*
+ * BLITSineHardSync_controller.cpp
+ *
+ * Copyright (c) 2014, fukuroda (https://github.com/fukuroder)
+ * Released under the MIT license
+ */
+
 #include "BLITSineHardSync_controller.h"
 #include "pluginterfaces/base/ibstream.h"
 #include <stdio.h>
