@@ -1,4 +1,4 @@
-### BLIT-based sinewave hardsync(vst3/VC++2013)
+### BLIT-based sinewave hardsync(Xcode/VisualStdio2015)
 
 ![Screenshot](https://raw.github.com/fukuroder/BLIT-based_sinewave_hardsync/master/screenshot.png)
 
@@ -37,15 +37,15 @@ b3 = -4*math.sin(math.pi*slave)                               # used for BLIT se
 t = 0.5                 # current position
 blit_sum = 0.0          # current value for BLIT section
 for i in range(1000):
-# output
-print b1*math.sin(2*math.pi*1*t) + b2*math.sin(2*math.pi*2*t) + b3*blit_sum
+    # output
+    print b1*math.sin(2*math.pi*1*t) + b2*math.sin(2*math.pi*2*t) + b3*blit_sum
 
-# update position
-t += dt
+    # update position
+    t += dt
 
-# update BLIT
-blit_sum = leak*blit_sum \
-+ math.cos((n+3)*math.pi*t)*math.sin((n-3+1)*math.pi*t)/math.sin(math.pi*t)*dt
+    # update BLIT
+    blit_sum = leak*blit_sum \
+        + math.cos((n+3)*math.pi*t)*math.sin((n-3+1)*math.pi*t)/math.sin(math.pi*t)*dt
 ```
 
 - - -
