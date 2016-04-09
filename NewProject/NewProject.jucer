@@ -4,7 +4,7 @@
               bundleIdentifier="com.yourcompany.NewProject" includeBinaryInAppConfig="1"
               buildVST="1" buildVST3="0" buildAU="0" buildRTAS="0" buildAAX="0"
               pluginName="NewProject" pluginDesc="NewProject" pluginManufacturer="yourcompany"
-              pluginManufacturerCode="Manu" pluginCode="Kbnw" pluginChannelConfigs="{1, 1}, {2, 2}"
+              pluginManufacturerCode="Manu" pluginCode="zzzz" pluginChannelConfigs="{0, 1}"
               pluginIsSynth="1" pluginWantsMidiIn="1" pluginProducesMidiOut="0"
               pluginIsMidiEffectPlugin="0" pluginEditorRequiresKeys="0" pluginAUExportPrefix="NewProjectAU"
               pluginRTASCategory="" aaxIdentifier="com.yourcompany.NewProject"
