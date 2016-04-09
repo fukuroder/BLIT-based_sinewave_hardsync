@@ -8,6 +8,9 @@
 #include "BLITSineHardSync_sound.h"
 #include "BLITSineHardSync_voice.h"
 
+#define _USE_MATH_DEFINES
+#include <math.h>
+
 //
 BLITSineHardSync_sound::BLITSineHardSync_sound()
 {
