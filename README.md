@@ -1,4 +1,4 @@
-### BLIT-based sinewave hardsync(Xcode/VisualStdio2015)
+### BLIT-based sinewave hardsync(Xcode/VisualStudio2015)
 
 ![Screenshot](https://raw.github.com/fukuroder/BLIT-based_sinewave_hardsync/master/screenshot.png)
 
