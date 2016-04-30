@@ -10,10 +10,10 @@
 
 //
 BLITSineHardSync_voice::BLITSineHardSync_voice()
-: t(0.0)
-, blit(0.0)
+: t(0)
 , n(0)
-, dt(0.0)
+, dt(0)
+, blit(0.0)
 , value(0.0)
 {
 }
@@ -32,9 +32,9 @@ void BLITSineHardSync_voice::startNote (int midiNoteNumber, float velocity,
     //
     double freq = MidiMessage::getMidiNoteInHertz (midiNoteNumber);
     this->n = static_cast<int>(getSampleRate() / 2.0 / freq);
-    this->dt = freq / getSampleRate();
+    this->dt = static_cast<int32_t>(0xFFFFFFFF / getSampleRate() * freq);
     this->blit = 0.0;
-    this->t = 0.5;
+    this->t = INT32_MIN;
     this->value = 0.0;
 }
 

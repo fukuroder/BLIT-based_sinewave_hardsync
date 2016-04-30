@@ -7,21 +7,14 @@
 
 #include "BLITSineHardSync_sound.h"
 #include "BLITSineHardSync_voice.h"
+#include "../../remez_approx/remez_approx.h"
 
 #define _USE_MATH_DEFINES
 #include <math.h>
 
 //
-BLITSineHardSync_sound::BLITSineHardSync_sound()
+BLITSineHardSync_sound::BLITSineHardSync_sound():_leak(0.995),_slave(1.0)
 {
-    // sine wave table
-    for (size_t ii = 0; ii < _sinTable.size(); ii++)
-    {
-        _sinTable[ii] = sin(2.0*M_PI * ii / (_sinTable.size() - 1));
-    }
-    
-    _leak = 0.995;
-    _slave = 1.0;
 }
 
 //
@@ -39,7 +32,7 @@ bool BLITSineHardSync_sound::appliesToChannel (int /*midiChannel*/)
 // set slave parameter
 void BLITSineHardSync_sound::setSlave(double value)
 {
-    if( _slave != value)
+    if( _slave != value )
     {
         _slave = value;
         if (value < 1.0 + 1.0e-12)
@@ -52,9 +45,9 @@ void BLITSineHardSync_sound::setSlave(double value)
         {
             // _b[n] = -2*n*::sin(M_PI*value)/(M_PI*(n+value)*(n-value));
             
-            _b1 = -2 * 1 * ::sin(M_PI*value) / (M_PI*(1 + value)*(1 - value));
-            _b2 = -2 * 2 * ::sin(M_PI*value) / (M_PI*(2 + value)*(2 - value));
-            _b3 = -4 * ::sin(M_PI*value);
+            _b1 = -2 * ::sin(M_PI*value) / (M_PI*(1 + value)*(1 - value));
+            _b2 = -4 * ::sin(M_PI*value) / (M_PI*(2 + value)*(2 - value));
+            _b3 = -2 * ::sin(M_PI*value) / M_PI / 0xFFFFFFFF;
         }
         else
         {
@@ -65,32 +58,18 @@ void BLITSineHardSync_sound::setSlave(double value)
     }
 }
 
-// calculate linear-interpolated sine wave
-double BLITSineHardSync_sound::LinearInterpolatedSin(double x)const
-{
-    // scale table size
-    double pos = (_sinTable.size() - 1) * x;
-    
-    // cast to int
-    unsigned int idx_A = static_cast<int>(pos);
-    
-    // linear interpolate
-    double s = pos - idx_A;
-    return (1.0 - s)*_sinTable[idx_A] + s*_sinTable[idx_A + 1];
-}
-
 // BLIT ?
-double BLITSineHardSync_sound::BLIT(double t, int N)const
+double BLITSineHardSync_sound::blit(int32_t t, int N)const
 {
     int N1 = N + 3;
-    double cos1 = LinearInterpolatedSin(::fmod(0.5*t*N1 + 0.25, 1.0));
+    double cos1 = remez_cos_int32(N1*(t/2));
     
     int N2 = N - 3 + 1;
-    double sin1 = LinearInterpolatedSin(::fmod(0.5*t*N2, 1.0));
+    double sin1 = remez_sin_int32(N2*(t/2));
     
-    double sin2 = LinearInterpolatedSin(0.5*t);
+    double sin2 = remez_sin_int32(t/2);
     
-    if ((1.0e-8) < t && t < 1.0 - (1.0e-8))
+    if ( sin2 < -1.0e-8 || 1.0e-8 < sin2 )
     {
         return cos1*sin1 / sin2;
     }
@@ -106,15 +85,16 @@ void BLITSineHardSync_sound::next(BLITSineHardSync_voice *voice)
 {
     // update t
     voice->t += voice->dt;
-    if (1.0 <= voice->t)voice->t -= 1.0;
+    
     if (voice->n >= 3)
     {
         // update BLIT section(n=3 -> Nyquist limit)
-        voice->blit = voice->blit*_leak + BLIT(voice->t, voice->n)*voice->dt;
+        voice->blit = voice->blit*_leak + blit(voice->t, voice->n)*voice->dt;
         
         // synthesize value
-        voice->value = _b1*LinearInterpolatedSin(voice->t)
-        + _b2*LinearInterpolatedSin(::fmod(2 * voice->t, 1.0))
+        voice->value =
+          _b1*remez_sin_int32(voice->t)
+        + _b2*remez_sin_int32(2*voice->t)
         + _b3*voice->blit;
     }
     else if (voice->n == 2)
@@ -123,8 +103,9 @@ void BLITSineHardSync_sound::next(BLITSineHardSync_voice *voice)
         voice->blit = 0.0;
         
         // synthesize value
-        voice->value = _b1*LinearInterpolatedSin(voice->t)
-        + _b2*LinearInterpolatedSin(::fmod(2 * voice->t, 1.0));
+        voice->value =
+          _b1*remez_sin_int32(voice->t)
+        + _b2*remez_sin_int32(2*voice->t);
     }
     else
     {
@@ -132,7 +113,6 @@ void BLITSineHardSync_sound::next(BLITSineHardSync_voice *voice)
         voice->blit = 0.0;
         
         // synthesize value
-       
-        voice->value = _b1*LinearInterpolatedSin(voice->t);
+        voice->value = _b1*remez_sin_int32(voice->t);
     }
 }

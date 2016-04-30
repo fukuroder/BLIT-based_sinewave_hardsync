@@ -1,13 +1,12 @@
 /*
  * BLITSineHardSync_sound.h
  *
- * Copyright (c) 2064, fukuroda (https://github.com/fukuroder)
+ * Copyright (c) 2016, fukuroda (https://github.com/fukuroder)
  * Released under the MIT license
  */
 
 #pragma once
 #include "../JuceLibraryCode/JuceHeader.h"
-#include <array>
 
 class BLITSineHardSync_voice;
 
@@ -31,10 +30,6 @@ public:
     void setSlave(double value);
     
 private:
-    
-    // sine table
-    std::array<double, (1 << 10) + 1> _sinTable;
-    
     // leak
     double _leak;
     
@@ -51,8 +46,5 @@ private:
     double _b3;
     
     //
-    double LinearInterpolatedSin(double x)const;
-    
-    //
-    double BLIT(double t, int n)const;
+    double blit(int32_t t, int n)const;
 };

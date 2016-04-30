@@ -20,11 +20,11 @@ BLITSineHardSync_processor::BLITSineHardSync_processor()
     // add voices
     for (int i = 0; i < numVoices; i++)
     {
-        synth.addVoice (new BLITSineHardSync_voice());
+        _synth.addVoice (new BLITSineHardSync_voice());
     }
     
     // add sound
-    synth.addSound (new BLITSineHardSync_sound());
+    _synth.addSound (new BLITSineHardSync_sound());
 }
 
 //
@@ -95,7 +95,7 @@ void BLITSineHardSync_processor::changeProgramName (int index, const String& new
 //
 void BLITSineHardSync_processor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    synth.setCurrentPlaybackSampleRate(sampleRate);
+    _synth.setCurrentPlaybackSampleRate(sampleRate);
 }
 
 //
@@ -109,7 +109,7 @@ void BLITSineHardSync_processor::processBlock (AudioSampleBuffer& buffer, MidiBu
     //-------------------
     // update parameters
     //-------------------
-    BLITSineHardSync_sound* sound = static_cast<BLITSineHardSync_sound*>(this->synth.getSound(0));
+    BLITSineHardSync_sound* sound = static_cast<BLITSineHardSync_sound*>(_synth.getSound(0));
     jassert(sound != nullptr);
     
     sound->setSlave(static_cast<double>(_slaveParam->get()));
@@ -117,7 +117,7 @@ void BLITSineHardSync_processor::processBlock (AudioSampleBuffer& buffer, MidiBu
     //----------------
     // process events
     //----------------
-    synth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
+    _synth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
 }
 
 //

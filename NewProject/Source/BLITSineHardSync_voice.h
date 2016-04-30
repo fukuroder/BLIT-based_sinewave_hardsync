@@ -45,16 +45,16 @@ public:
                          int numSamples) override;
     
     //
-    double t;
+    int32_t t;
+    
+    //
+    int32_t n;
+    
+    //
+    int32_t dt;
     
     //
     double blit;
-    
-    //
-    int n;
-    
-    //
-    double dt;
     
     //
     double value;

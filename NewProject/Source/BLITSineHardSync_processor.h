@@ -7,7 +7,6 @@
 
 #pragma once
 #include "../JuceLibraryCode/JuceHeader.h"
-#include <array>
 
 //
 class BLITSineHardSync_processor : public AudioProcessor
@@ -54,11 +53,17 @@ public:
     
     //
     void setCurrentProgram (int index) override;
+    
+    //
     const String getProgramName (int index) override;
+    
+    //
     void changeProgramName (int index, const String& newName) override;
     
-    //==============================================================================
+    //
     void getStateInformation (MemoryBlock& destData) override;
+    
+    //
     void setStateInformation (const void* data, int sizeInBytes) override;
     
 private:
@@ -66,7 +71,7 @@ private:
     AudioParameterFloat* _slaveParam;
     
     //
-    Synthesiser synth;
+    Synthesiser _synth;
     
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (BLITSineHardSync_processor)
