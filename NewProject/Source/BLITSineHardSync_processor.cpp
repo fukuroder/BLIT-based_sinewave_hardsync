@@ -15,7 +15,7 @@ BLITSineHardSync_processor::BLITSineHardSync_processor()
     _slaveParam = new AudioParameterFloat ("Slave", "Slave", 1.0f, 2.0f, 1.2f);
     addParameter(_slaveParam);
     
-    const int numVoices = 1;
+    const int numVoices = 8;
     
     // add voices
     for (int i = 0; i < numVoices; i++)
