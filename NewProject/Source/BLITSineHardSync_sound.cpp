@@ -62,12 +62,12 @@ void BLITSineHardSync_sound::setSlave(double value)
 double BLITSineHardSync_sound::blit(int32_t t, int N)const
 {
     int N1 = N + 3;
-    double cos1 = remez_cos_int32(N1*(t/2));
+    double cos1 = remez_cos_uint32(N1*(t/2));
     
     int N2 = N - 3 + 1;
-    double sin1 = remez_sin_int32(N2*(t/2));
+    double sin1 = remez_sin_uint32(N2*(t/2));
     
-    double sin2 = remez_sin_int32(t/2);
+    double sin2 = remez_sin_uint32(t/2);
     
     if ( sin2 < -1.0e-8 || 1.0e-8 < sin2 )
     {
@@ -93,8 +93,8 @@ void BLITSineHardSync_sound::next(BLITSineHardSync_voice *voice)
         
         // synthesize value
         voice->value =
-          _b1*remez_sin_int32(voice->t)
-        + _b2*remez_sin_int32(2*voice->t)
+          _b1*remez_sin_uint32(voice->t)
+        + _b2*remez_sin_uint32(2*voice->t)
         + _b3*voice->blit;
     }
     else if (voice->n == 2)
@@ -104,8 +104,8 @@ void BLITSineHardSync_sound::next(BLITSineHardSync_voice *voice)
         
         // synthesize value
         voice->value =
-          _b1*remez_sin_int32(voice->t)
-        + _b2*remez_sin_int32(2*voice->t);
+          _b1*remez_sin_uint32(voice->t)
+        + _b2*remez_sin_uint32(2*voice->t);
     }
     else
     {
@@ -113,6 +113,6 @@ void BLITSineHardSync_sound::next(BLITSineHardSync_voice *voice)
         voice->blit = 0.0;
         
         // synthesize value
-        voice->value = _b1*remez_sin_int32(voice->t);
+        voice->value = _b1*remez_sin_uint32(voice->t);
     }
 }

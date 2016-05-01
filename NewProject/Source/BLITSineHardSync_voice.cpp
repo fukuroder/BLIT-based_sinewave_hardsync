@@ -34,7 +34,7 @@ void BLITSineHardSync_voice::startNote (int midiNoteNumber, float velocity,
     this->n = static_cast<int>(getSampleRate() / 2.0 / freq);
     this->dt = static_cast<int32_t>(0xFFFFFFFF / getSampleRate() * freq);
     this->blit = 0.0;
-    this->t = INT32_MIN;
+    this->t = 0x40000000;
     this->value = 0.0;
 }
 
