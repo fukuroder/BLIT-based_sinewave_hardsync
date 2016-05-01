@@ -9,9 +9,6 @@
 #include "BLITSineHardSync_voice.h"
 #include "../../remez_approx/remez_approx.h"
 
-#define _USE_MATH_DEFINES
-#include <math.h>
-
 //
 BLITSineHardSync_sound::BLITSineHardSync_sound():_leak(0.995),_slave(1.0)
 {
