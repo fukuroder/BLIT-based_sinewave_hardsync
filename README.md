@@ -43,7 +43,7 @@ for i in range(1000):
     # update position
     t += dt
 
-    # update BLIT
+    # update BLIT (dividing by zero is not considered!)
     blit_sum = leak*blit_sum \
         + math.cos((n+3)*math.pi*t)*math.sin((n-3+1)*math.pi*t)/math.sin(math.pi*t)*dt
 ```
