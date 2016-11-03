@@ -20,18 +20,18 @@ slave = 1.2           # [1.0, 2.0]
                       # (slave_freq = master_freq * slave)
 
 # set frequency...
-master_freq = 440.0                                           # master frequency
+master_freq = 441.0                                               # master frequency
 
-n = int(sample_rate/2/master_freq)                            # Nyquist limit
-dt = 2*math.pi*master_freq/sample_rate                        # delta t
-b1 = -2*math.sin(math.pi*slave)/(math.pi*(1+slave)*(1-slave)) # Fourier coefficient for sin(2*PI*1*t)
-b2 = -4*math.sin(math.pi*slave)/(math.pi*(2+slave)*(2-slave)) # Fourier coefficient for sin(2*PI*2*t)
-b3 = -2*math.sin(math.pi*slave)/math.pi                       # used for BLIT section
+n = int(sample_rate/2/master_freq)                                # Nyquist limit
+dt = 2*math.pi*master_freq/sample_rate                            # delta t
+b1 = math.sin(math.pi*slave)/math.pi*(-1/(1+slave)-1/(1-slave)+2) # Fourier coefficient for sin(2*PI*1*t)
+b2 = math.sin(math.pi*slave)/math.pi*(-1/(2+slave)-1/(2-slave)+1) # Fourier coefficient for sin(2*PI*2*t)
+b3 = -math.sin(math.pi*slave)/math.pi                             # used for BLIT section
 
 # for each sample...
 t = -math.pi            # current position
 blit_sum = 0.0          # current value for BLIT section
-for i in range(1000):
+for _ in range(1000):
     # output
     print(b1*math.sin(t) + b2*math.sin(2*t) + b3*blit_sum)
 
@@ -39,5 +39,4 @@ for i in range(1000):
     t += dt
 
     # update BLIT (dividing by zero is not considered!)
-    blit_sum = leak*blit_sum \
-             + math.cos((n+3)*0.5*t)*math.sin((n-3+1)*0.5*t)/math.sin(0.5*t)*dt
+    blit_sum = leak*blit_sum + (math.sin((n+0.5)*t)/math.sin(0.5*t)-1.0)*dt

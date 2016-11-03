@@ -21,7 +21,7 @@ slave = 1.2           # [1.0, 2.0]
                       # (slave_freq = master_freq * slave)
 
 # set frequency...
-master_freq = 441.0                                           # master frequency
+master_freq = 441.0                                               # master frequency
 
 n = int(sample_rate/2/master_freq)                                # Nyquist limit
 dt = 2*math.pi*master_freq/sample_rate                            # delta t
@@ -35,7 +35,7 @@ blit_sum = 0.0          # current value for BLIT section
 v1 = []
 v2 = []
 v3 = []
-for i in range(400):
+for _ in range(400):
     # output
     v1.append(b1*math.sin(t) + b2*math.sin(2*t))
     v2.append(b3*blit_sum)
@@ -44,7 +44,7 @@ for i in range(400):
     # update position
     t += dt
 
-    # update BLIT
+    # update BLIT (dividing by zero is not considered!)
     blit_sum = leak*blit_sum + (math.sin((n+0.5)*t)/math.sin(0.5*t)-1.0)*dt
 
 # Additive synthesis section(k=1...2)
