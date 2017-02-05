@@ -27,24 +27,22 @@ bool BLITSineHardSync_sound::appliesToChannel (int /*midiChannel*/)
 }
 
 // set slave parameter
-void BLITSineHardSync_sound::setSlave(double value)
+void BLITSineHardSync_sound::setSlave(double salve)
 {
-    if( _slave != value )
+    if( _slave != salve )
     {
-        _slave = value;
-        if (value < 1.0 + 1.0e-12)
+        _slave = salve;
+        if (salve < 1.0 + 1.0e-12)
         {
             _b1 = -1.0;
             _b2 = 0.0;
             _b3 = 0.0;
         }
-        else if (value < 2.0 - 1.0e-12)
-        {
-            // _b[n] = -2*n*::sin(M_PI*value)/(M_PI*(n+value)*(n-value));
-            
-            _b1 = -2 * ::sin(M_PI*value) / (M_PI*(1 + value)*(1 - value));
-            _b2 = -4 * ::sin(M_PI*value) / (M_PI*(2 + value)*(2 - value));
-            _b3 = -4 * ::sin(M_PI*value) / 0xFFFFFFFFU;
+        else if (salve < 2.0 - 1.0e-12)
+        {   
+			_b1 = ::sin(M_PI*salve) / M_PI * (-1 / (1 + salve) - 1 / (1 - salve) + 2);
+			_b2 = ::sin(M_PI*salve) / M_PI * (-1 / (2 + salve) - 1 / (2 - salve) + 1);
+            _b3 = -::sin(M_PI*salve) / 0xFFFFFFFFU;
         }
         else
         {
@@ -58,22 +56,17 @@ void BLITSineHardSync_sound::setSlave(double value)
 // BLIT ?
 double BLITSineHardSync_sound::blit(int32_t t, int N)const
 {
-    int N1 = N + 3;
-    double cos1 = remez_cos_int32(t/2*N1);
+    double den = remez_sin_int32(t/2);
+	double num = remez_sin_int32(t/2+N*t);
     
-    int N2 = N - 3 + 1;
-    double sin1 = remez_sin_int32(t/2*N2);
-    
-    double sin2 = remez_sin_int32(t/2);
-    
-    if ( sin2 < -1.0e-8 || 1.0e-8 < sin2 )
+    if (den < -1.0e-12 || 1.0e-12 < den)
     {
-        return cos1*sin1 / sin2;
+        return 2.0*num / den;
     }
     else
     {
         // apply L'Hopital's rule
-        return N2;
+        return 2.0*(2 * N + 1);
     }
 }
 
@@ -86,7 +79,7 @@ void BLITSineHardSync_sound::next(BLITSineHardSync_voice *voice)
     if (voice->n >= 3)
     {
         // update BLIT section(n=3 -> Nyquist limit)
-        voice->blit = voice->blit*_leak + blit(voice->t, voice->n)*voice->dt;
+        voice->blit = voice->blit*_leak + (blit(voice->t, voice->n)-2.0)*voice->dt;
         
         // synthesize value
         voice->value =
