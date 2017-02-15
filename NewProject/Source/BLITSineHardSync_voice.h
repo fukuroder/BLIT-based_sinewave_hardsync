@@ -58,6 +58,16 @@ public:
     
     //
     double value;
+
+	//
+	int _midiNoteNumber;
+
+	//
+	int _currentPitchWheelPosition;
+
+	//
+	double _velocity;
+
 private:
     
     //

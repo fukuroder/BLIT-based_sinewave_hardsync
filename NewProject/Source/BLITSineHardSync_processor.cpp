@@ -14,6 +14,21 @@ BLITSineHardSync_processor::BLITSineHardSync_processor()
 {
     _slaveParam = new AudioParameterFloat ("Slave", "Slave", 1.0f, 2.0f, 1.2f);
     addParameter(_slaveParam);
+
+	//_attackParam = new AudioParameterFloat("Attack", "Attack", 0.0f, 1.0f, 0.2f);
+	//addParameter(_attackParam);
+
+	//_releaseParam = new AudioParameterFloat("Release", "Release", 0.0f, 1.0f, 0.2f);
+	//addParameter(_releaseParam);
+
+	//_cutoffParam = new AudioParameterFloat("Cufoff Freq.", "Cufoff Freq.", 0.0f, 1.0f, 0.2f);
+	//addParameter(_cutoffParam);
+
+	//_resonanceParam = new AudioParameterFloat("Resonance", "Resonance", 0.0f, 1.0f, 0.2f);
+	//addParameter(_resonanceParam);
+
+	//_egintensityParam = new AudioParameterFloat("EG Int.", "EG Int.", 0.0f, 1.0f, 0.2f);
+	//addParameter(_egintensityParam);
     
     const int numVoices = 8;
     

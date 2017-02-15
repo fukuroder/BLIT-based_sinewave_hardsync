@@ -68,7 +68,22 @@ public:
     
 private:
     //
-    AudioParameterFloat* _slaveParam;
+	AudioParameterFloat* _slaveParam;
+
+	//
+	AudioParameterFloat* _attackParam;
+
+	//
+	AudioParameterFloat* _releaseParam;
+
+	//
+	AudioParameterFloat* _cutoffParam;
+
+	//
+	AudioParameterFloat* _resonanceParam;
+
+	//
+	AudioParameterFloat* _egintensityParam;
     
     //
     Synthesiser _synth;

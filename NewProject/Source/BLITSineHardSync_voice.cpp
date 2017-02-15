@@ -27,10 +27,13 @@ bool BLITSineHardSync_voice::canPlaySound (SynthesiserSound* sound)
 //
 void BLITSineHardSync_voice::startNote (int midiNoteNumber, float velocity,
                 SynthesiserSound* /*sound*/,
-                int /*currentPitchWheelPosition*/)
+                int currentPitchWheelPosition)
 {
-    //
-    double freq = MidiMessage::getMidiNoteInHertz (midiNoteNumber);
+	_midiNoteNumber = midiNoteNumber;
+	_currentPitchWheelPosition = currentPitchWheelPosition;
+	_velocity = velocity;
+
+	double freq = 440.0 * pow(2.0, (midiNoteNumber - 69) / 12.0 + (currentPitchWheelPosition - 8192.0) / 8192.0);
     this->n = static_cast<int>(getSampleRate() / 2.0 / freq);
     this->dt = static_cast<int32_t>(0xFFFFFFFFU / getSampleRate() * freq);
     this->blit = 0.0;
@@ -45,8 +48,12 @@ void BLITSineHardSync_voice::stopNote (float /*velocity*/, bool allowTailOff)
 }
 
 //
-void BLITSineHardSync_voice::pitchWheelMoved (int /*newValue*/)
+void BLITSineHardSync_voice::pitchWheelMoved (int newValue)
 {
+	_currentPitchWheelPosition = newValue;
+	double freq = 440.0 * pow(2.0, (_midiNoteNumber - 69) / 12.0 + (_currentPitchWheelPosition - 8192.0) / 8192.0);
+	this->n = static_cast<int>(getSampleRate() / 2.0 / freq);
+	this->dt = static_cast<int32_t>(0xFFFFFFFFU / getSampleRate() * freq);
 }
 
 //
