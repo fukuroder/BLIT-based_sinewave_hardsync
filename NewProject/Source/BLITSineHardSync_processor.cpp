@@ -1,7 +1,7 @@
 /*
  * BLITSineHardSync_processor.cpp
  *
- * Copyright (c) 2016, fukuroda (https://github.com/fukuroder)
+ * Copyright (c) 2017, fukuroda (https://github.com/fukuroder)
  * Released under the MIT license
  */
 
@@ -56,21 +56,31 @@ const String BLITSineHardSync_processor::getName() const
 //
 bool BLITSineHardSync_processor::acceptsMidi() const
 {
-#if JucePlugin_WantsMidiInput
+   #if JucePlugin_WantsMidiInput
     return true;
-#else
+   #else
     return false;
-#endif
+   #endif
 }
 
 //
 bool BLITSineHardSync_processor::producesMidi() const
 {
-#if JucePlugin_ProducesMidiOutput
+   #if JucePlugin_ProducesMidiOutput
     return true;
-#else
+   #else
     return false;
-#endif
+   #endif
+}
+
+//
+bool BLITSineHardSync_processor::isMidiEffect() const
+{
+   #if JucePlugin_IsMidiEffect
+    return true;
+   #else
+    return false;
+   #endif
 }
 
 //
@@ -99,7 +109,7 @@ void BLITSineHardSync_processor::setCurrentProgram (int index)
 //
 const String BLITSineHardSync_processor::getProgramName (int index)
 {
-    return String();
+    return {};
 }
 
 //

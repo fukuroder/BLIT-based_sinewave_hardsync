@@ -1,7 +1,7 @@
 /*
  * BLITSineHardSync_processor.h
  *
- * Copyright (c) 2016, fukuroda (https://github.com/fukuroder)
+ * Copyright (c) 2017, fukuroda (https://github.com/fukuroder)
  * Released under the MIT license
  */
 
@@ -16,7 +16,7 @@ public:
     BLITSineHardSync_processor();
     
     //
-    virtual ~BLITSineHardSync_processor();
+    ~BLITSineHardSync_processor();
     
     //
     void prepareToPlay (double sampleRate, int samplesPerBlock) override;
@@ -43,8 +43,11 @@ public:
     bool producesMidi() const override;
     
     //
-    double getTailLengthSeconds() const override;
+    bool isMidiEffect () const override;
     
+    //
+    double getTailLengthSeconds() const override;
+
     //
     int getNumPrograms() override;
     

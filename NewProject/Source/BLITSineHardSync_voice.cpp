@@ -1,7 +1,7 @@
 /*
  * BLITSineHardSync_voice.cpp
  *
- * Copyright (c) 2016, fukuroda (https://github.com/fukuroder)
+ * Copyright (c) 2017, fukuroda (https://github.com/fukuroder)
  * Released under the MIT license
  */
 
