@@ -40,8 +40,8 @@ void BLITSineHardSync_sound::setSlave(double salve)
         }
         else if (salve < 2.0 - 1.0e-12)
         {   
-			_b1 = ::sin(M_PI*salve) / M_PI * (-1 / (1 + salve) - 1 / (1 - salve) + 2);
-			_b2 = ::sin(M_PI*salve) / M_PI * (-1 / (2 + salve) - 1 / (2 - salve) + 1);
+            _b1 = ::sin(M_PI*salve) / M_PI * (-1 / (1 + salve) - 1 / (1 - salve) + 2);
+            _b2 = ::sin(M_PI*salve) / M_PI * (-1 / (2 + salve) - 1 / (2 - salve) + 1);
             _b3 = -::sin(M_PI*salve) / 0xFFFFFFFFU;
         }
         else
