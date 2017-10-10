@@ -27,7 +27,10 @@ public:
     void next(BLITSineHardSync_voice *voice);
     
     // slave
-    void setSlave(double value);
+	void setSlave(double value);
+
+	// 
+	void setAttack(double value);
     
 private:
     // leak
@@ -35,6 +38,9 @@ private:
     
     // slave
     double _slave;
+
+	// attack
+	double _attack;
     
     // Fourier coefficient for sin(2*PI*1*t)
     double _b1;

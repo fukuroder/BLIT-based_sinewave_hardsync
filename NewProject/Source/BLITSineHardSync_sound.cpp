@@ -53,6 +53,12 @@ void BLITSineHardSync_sound::setSlave(double salve)
     }
 }
 
+//
+void BLITSineHardSync_sound::setAttack(double value)
+{
+	_attack = 0.999*value;
+}
+
 // BLIT ?
 double BLITSineHardSync_sound::blit(int32_t t, int N)const
 {
@@ -75,6 +81,24 @@ void BLITSineHardSync_sound::next(BLITSineHardSync_voice *voice)
 {
     // update t
     voice->t += voice->dt;
+	
+	if (voice->_state == BLITSineHardSync_voice::state::Attack)
+	{
+		voice->_envelope = 1.0 - (1.0 - voice->_envelope)*_attack;
+		if (voice->_envelope >= 1.0)
+		{
+			voice->_envelope = 1.0;
+			voice->_state = BLITSineHardSync_voice::state::Sustain;
+		}
+	}
+	else if (voice->_state == BLITSineHardSync_voice::state::Release)
+	{
+		voice->_envelope = voice->_envelope*0.999;
+		if (voice->_envelope < 1.0e-8)
+		{
+			voice->stopNote(0.0f, false);
+		}
+	}
     
     if (voice->n >= 3)
     {
@@ -105,4 +129,6 @@ void BLITSineHardSync_sound::next(BLITSineHardSync_voice *voice)
         // synthesize value
         voice->value = _b1*remez_sin_int32(voice->t)*voice->_velocity;
     }
+
+	voice->value *= voice->_envelope;
 }

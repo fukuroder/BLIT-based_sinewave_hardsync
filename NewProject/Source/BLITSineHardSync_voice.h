@@ -68,6 +68,14 @@ public:
 	//
 	double _velocity;
 
+	enum state {
+		Attack,
+		Sustain,
+		Release
+	} _state;
+
+	double _envelope;
+
 private:
     
     //

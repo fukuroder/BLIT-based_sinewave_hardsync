@@ -15,8 +15,8 @@ BLITSineHardSync_processor::BLITSineHardSync_processor()
     _slaveParam = new AudioParameterFloat ("Slave", "Slave", 1.0f, 2.0f, 1.2f);
     addParameter(_slaveParam);
 
-	//_attackParam = new AudioParameterFloat("Attack", "Attack", 0.0f, 1.0f, 0.2f);
-	//addParameter(_attackParam);
+	_attackParam = new AudioParameterFloat("Attack", "Attack", 0.0f, 1.0f, 0.0f);
+	addParameter(_attackParam);
 
 	//_releaseParam = new AudioParameterFloat("Release", "Release", 0.0f, 1.0f, 0.2f);
 	//addParameter(_releaseParam);
@@ -102,23 +102,23 @@ int BLITSineHardSync_processor::getCurrentProgram()
 }
 
 //
-void BLITSineHardSync_processor::setCurrentProgram (int index)
+void BLITSineHardSync_processor::setCurrentProgram (int /*index*/)
 {
 }
 
 //
-const String BLITSineHardSync_processor::getProgramName (int index)
+const String BLITSineHardSync_processor::getProgramName (int /*index*/)
 {
     return {};
 }
 
 //
-void BLITSineHardSync_processor::changeProgramName (int index, const String& newName)
+void BLITSineHardSync_processor::changeProgramName (int /*index*/, const String& /*newName*/)
 {
 }
 
 //
-void BLITSineHardSync_processor::prepareToPlay (double sampleRate, int samplesPerBlock)
+void BLITSineHardSync_processor::prepareToPlay (double sampleRate, int /*samplesPerBlock*/)
 {
     _synth.setCurrentPlaybackSampleRate(sampleRate);
 }
@@ -137,7 +137,8 @@ void BLITSineHardSync_processor::processBlock (AudioSampleBuffer& buffer, MidiBu
     BLITSineHardSync_sound* sound = static_cast<BLITSineHardSync_sound*>(_synth.getSound(0));
     jassert(sound != nullptr);
     
-    sound->setSlave(static_cast<double>(_slaveParam->get()));
+	sound->setSlave(static_cast<double>(_slaveParam->get()));
+	sound->setAttack(static_cast<double>(_attackParam->get()));
     
     //----------------
     // process events
@@ -158,12 +159,12 @@ AudioProcessorEditor* BLITSineHardSync_processor::createEditor()
 }
 
 //
-void BLITSineHardSync_processor::getStateInformation (MemoryBlock& destData)
+void BLITSineHardSync_processor::getStateInformation (MemoryBlock& /*destData*/)
 {
 }
 
 //
-void BLITSineHardSync_processor::setStateInformation (const void* data, int sizeInBytes)
+void BLITSineHardSync_processor::setStateInformation (const void* /*data*/, int /*sizeInBytes*/)
 {
 }
 

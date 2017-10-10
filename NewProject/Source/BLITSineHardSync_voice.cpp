@@ -32,6 +32,8 @@ void BLITSineHardSync_voice::startNote (int midiNoteNumber, float velocity,
 	_midiNoteNumber = midiNoteNumber;
 	_currentPitchWheelPosition = currentPitchWheelPosition;
 	_velocity = velocity;
+	_envelope = 0.0;
+	_state = state::Attack;
 
 	double freq = 440.0 * pow(2.0, (midiNoteNumber - 69) / 12.0 + (currentPitchWheelPosition - 8192.0) / 8192.0);
     this->n = static_cast<int>(getSampleRate() / 2.0 / freq);
@@ -44,7 +46,13 @@ void BLITSineHardSync_voice::startNote (int midiNoteNumber, float velocity,
 //
 void BLITSineHardSync_voice::stopNote (float /*velocity*/, bool allowTailOff)
 {
-    clearCurrentNote();
+	if (allowTailOff)
+	{
+		_state = state::Release;
+	}
+	else {
+		clearCurrentNote();
+	}
 }
 
 //
@@ -87,13 +95,9 @@ template <typename FloatType> void BLITSineHardSync_voice::processBlock (AudioBu
     {
         for (int i = outputBuffer.getNumChannels()-1; i >= 0; --i)
         {
-            outputBuffer.addSample(i, startSample, this->value);
+            outputBuffer.addSample(i, startSample, static_cast<float>(this->value));
         }
         sound->next(this);
         startSample++;
     }
 }
-
-
-
-
