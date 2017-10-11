@@ -10,7 +10,7 @@
 #include "../../remez_approx/remez_approx.h"
 
 //
-BLITSineHardSync_sound::BLITSineHardSync_sound():_leak(0.995),_slave(1.0)
+BLITSineHardSync_sound::BLITSineHardSync_sound():_leak(0.995),_slave(1.0),_attack(0.0),_cutoff(0.5)
 {
 }
 
@@ -59,6 +59,22 @@ void BLITSineHardSync_sound::setAttack(double value)
 	_attack = 0.999*value;
 }
 
+//
+void BLITSineHardSync_sound::setCutoff(double value)
+{
+	_cutoff = 8.0*value;
+}
+
+double BLITSineHardSync_sound::getCutoff() const
+{
+	return _cutoff;
+}
+
+double BLITSineHardSync_sound::getAttack() const
+{
+	return _attack;
+}
+
 // BLIT ?
 double BLITSineHardSync_sound::blit(int32_t t, int N)const
 {
@@ -84,7 +100,7 @@ void BLITSineHardSync_sound::next(BLITSineHardSync_voice *voice)
 	
 	if (voice->_state == BLITSineHardSync_voice::state::Attack)
 	{
-		voice->_envelope = 1.0 - (1.0 - voice->_envelope)*_attack;
+		voice->_envelope = 1.0 - (1.0 - voice->_envelope)*voice->_attack;
 		if (voice->_envelope >= 1.0)
 		{
 			voice->_envelope = 1.0;
@@ -129,6 +145,9 @@ void BLITSineHardSync_sound::next(BLITSineHardSync_voice *voice)
         // synthesize value
         voice->value = _b1*remez_sin_int32(voice->t)*voice->_velocity;
     }
+
+	voice->_filter.next();
+	voice->value = voice->_filter.process(voice->value);
 
 	voice->value *= voice->_envelope;
 }

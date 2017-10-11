@@ -31,6 +31,15 @@ public:
 
 	// 
 	void setAttack(double value);
+
+	// 
+	void setCutoff(double value);
+
+	//
+	double getAttack()const;
+
+	//
+	double getCutoff()const;
     
 private:
     // leak
@@ -41,6 +50,9 @@ private:
 
 	// attack
 	double _attack;
+
+	// cutoff
+	double _cutoff;
     
     // Fourier coefficient for sin(2*PI*1*t)
     double _b1;

@@ -21,8 +21,8 @@ BLITSineHardSync_processor::BLITSineHardSync_processor()
 	//_releaseParam = new AudioParameterFloat("Release", "Release", 0.0f, 1.0f, 0.2f);
 	//addParameter(_releaseParam);
 
-	//_cutoffParam = new AudioParameterFloat("Cufoff Freq.", "Cufoff Freq.", 0.0f, 1.0f, 0.2f);
-	//addParameter(_cutoffParam);
+	_cutoffParam = new AudioParameterFloat("Cufoff Freq.", "Cufoff Freq.", 0.0f, 1.0f, 0.5f);
+	addParameter(_cutoffParam);
 
 	//_resonanceParam = new AudioParameterFloat("Resonance", "Resonance", 0.0f, 1.0f, 0.2f);
 	//addParameter(_resonanceParam);
@@ -139,6 +139,7 @@ void BLITSineHardSync_processor::processBlock (AudioSampleBuffer& buffer, MidiBu
     
 	sound->setSlave(static_cast<double>(_slaveParam->get()));
 	sound->setAttack(static_cast<double>(_attackParam->get()));
+	sound->setCutoff(static_cast<double>(_cutoffParam->get()));
     
     //----------------
     // process events

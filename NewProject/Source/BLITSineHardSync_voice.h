@@ -8,6 +8,37 @@
 #pragma once
 #include "../JuceLibraryCode/JuceHeader.h"
 
+
+class biquad_filter
+{
+protected:
+
+	// フィルタ係数
+	double _a0, _a1, _a2, _b1, _b2;
+
+	// バッファ
+	double _in_z, _in_zz, _out_z, _out_zz;
+
+	double _cutoff;
+	double _resonance;
+
+public:
+	// コンストラクタ
+	biquad_filter();
+
+	// 実行
+	double process(double in);
+
+	void next();
+
+	// フィルタ係数更新
+	void update(double cutoff, double resonance);
+
+	// バッファのリセット
+	void reset_buffer();
+};
+
+
 //
 class BLITSineHardSync_voice  : public SynthesiserVoice
 {
@@ -43,6 +74,12 @@ public:
     void renderNextBlock(AudioBuffer<double>& outputBuffer,
                          int startSample,
                          int numSamples) override;
+
+	//
+	void setAttack(double attack);
+	
+	//
+	void setCufoff(double cutoff);
     
     //
     int32_t t;
@@ -73,9 +110,16 @@ public:
 		Sustain,
 		Release
 	} _state;
-
+	
+	//
 	double _envelope;
 
+	double _attack;
+
+	double _cutoff;
+
+	//
+	biquad_filter _filter;
 private:
     
     //
