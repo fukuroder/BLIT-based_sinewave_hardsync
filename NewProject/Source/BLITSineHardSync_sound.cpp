@@ -10,7 +10,7 @@
 #include "../../remez_approx/remez_approx.h"
 
 //
-BLITSineHardSync_sound::BLITSineHardSync_sound():_leak(0.995),_slave(1.0),_attack(0.0),_cutoff(0.5)
+BLITSineHardSync_sound::BLITSineHardSync_sound():_leak(0.995),_slave(1.0),_attack(0.0),_cutoff(0.0)
 {
 }
 
@@ -95,9 +95,9 @@ double BLITSineHardSync_sound::blit(int32_t t, int N)const
 //
 void BLITSineHardSync_sound::next(BLITSineHardSync_voice *voice)
 {
-    // update t
-    voice->t += voice->dt;
-	
+	// update t
+	voice->t += voice->dt;
+
 	if (voice->_state == BLITSineHardSync_voice::state::Attack)
 	{
 		voice->_envelope = 1.0 - (1.0 - voice->_envelope)*voice->_attack;
@@ -115,39 +115,42 @@ void BLITSineHardSync_sound::next(BLITSineHardSync_voice *voice)
 			voice->stopNote(0.0f, false);
 		}
 	}
-    
-    if (voice->n >= 3)
-    {
-        // update BLIT section(n=3 -> Nyquist limit)
-        voice->blit = voice->blit*_leak + (blit(voice->t, voice->n)-2.0)*voice->dt;
-        
-        // synthesize value
-        voice->value =
-        ( _b1*remez_sin_int32(voice->t)
-        + _b2*remez_sin_int32(2*voice->t)
-        + _b3*voice->blit)*voice->_velocity;
-    }
-    else if (voice->n == 2)
-    {
-        // reset BLIT section
-        voice->blit = 0.0;
-        
-        // synthesize value
-        voice->value =
-        ( _b1*remez_sin_int32(voice->t)
-        + _b2*remez_sin_int32(2*voice->t))*voice->_velocity;
-    }
-    else
-    {
-        // reset BLIT section
-        voice->blit = 0.0;
-        
-        // synthesize value
-        voice->value = _b1*remez_sin_int32(voice->t)*voice->_velocity;
-    }
 
-	voice->_filter.next();
-	voice->value = voice->_filter.process(voice->value);
+	if (voice->n >= 3)
+	{
+		// update BLIT section(n=3 -> Nyquist limit)
+		voice->blit = voice->blit*_leak + (blit(voice->t, voice->n) - 2.0)*voice->dt;
+
+		// synthesize value
+		voice->value =
+			(_b1*remez_sin_int32(voice->t)
+				+ _b2*remez_sin_int32(2 * voice->t)
+				+ _b3*voice->blit)*voice->_velocity;
+	}
+	else if (voice->n == 2)
+	{
+		// reset BLIT section
+		voice->blit = 0.0;
+
+		// synthesize value
+		voice->value =
+			(_b1*remez_sin_int32(voice->t)
+				+ _b2*remez_sin_int32(2 * voice->t))*voice->_velocity;
+	}
+	else
+	{
+		// reset BLIT section
+		voice->blit = 0.0;
+
+		// synthesize value
+		voice->value = _b1*remez_sin_int32(voice->t)*voice->_velocity;
+	}
+
+	if (voice->_cutoff > 0.0)
+	{
+		voice->_filter.next();
+		voice->value = voice->_filter.process(voice->value);
+	}
 
 	voice->value *= voice->_envelope;
 }

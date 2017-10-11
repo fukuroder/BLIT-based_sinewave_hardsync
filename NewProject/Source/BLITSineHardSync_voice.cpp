@@ -46,8 +46,9 @@ void BLITSineHardSync_voice::startNote (int midiNoteNumber, float velocity,
     this->t = INT32_MIN;
     this->value = 0.0;
 	this->_attack = bsound->getAttack();
+	this->_cutoff = bsound->getCutoff();
 
-	_filter.update(freq*bsound->getCutoff(), 20);
+	_filter.update(freq*this->_cutoff, 20);
 	_filter.reset_buffer();
 }
 
