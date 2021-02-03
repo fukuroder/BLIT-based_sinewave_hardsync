@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 #------------------------------------------------------------
 # test_plot.py
 #
@@ -63,7 +61,7 @@ plt.ylim([-1.3,1.3])
 plt.grid()
 plt.setp(p2.get_xticklabels(), visible=False)
 plt.setp(p2.get_yticklabels(), visible=False)
-plt.title('BLIT saw', fontsize=10)
+plt.title('BLIT_saw', fontsize=10)
 
 # Additive + BLIT
 p3 = plt.subplot(133)
