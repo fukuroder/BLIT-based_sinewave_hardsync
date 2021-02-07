@@ -1,4 +1,4 @@
-### BLIT-based sinewave hardsync(Xcode/VisualStudio2015)
+### BLIT-based sinewave hardsync
 
 ![Screenshot](https://raw.github.com/fukuroder/BLIT-based_sinewave_hardsync/master/screenshot.png)
 
@@ -44,8 +44,3 @@ for _ in range(1000):
     # update BLIT (dividing by zero is not considered!)
     blit_sum = leak*blit_sum + (math.sin((n+0.5)*t)/math.sin(0.5*t)-1.0)*dt
 ```
-
-- - -
-
-### Implementation by Reaktor
-* [BLIT-based sinewave hardsync](http://www.native-instruments.com/jp/community/reaktor-user-library/entry/show/7639/)
