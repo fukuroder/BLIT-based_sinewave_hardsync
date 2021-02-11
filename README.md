@@ -10,9 +10,6 @@ This waveform is constructed with additive synthesis and BLIT synthesis.
 ![Figure1](https://raw.github.com/fukuroder/BLIT-based_sinewave_hardsync/master/figure.gif)
 
 ```python
-# test.py
-
-# import
 import math
 
 # initialize...
