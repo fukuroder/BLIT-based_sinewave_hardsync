@@ -19,7 +19,7 @@ slave = 1.2           # [1.0, 2.0]
                       # (slave_freq = master_freq * slave)
 
 # set frequency...
-master_freq = 441.0                                               # master frequency
+master_freq = 440.0                                               # master frequency
 
 n = int(sample_rate/2/master_freq)                                # Nyquist limit
 dt = 2*math.pi*master_freq/sample_rate                            # delta t
@@ -46,27 +46,27 @@ for _ in range(400):
     blit_sum = leak*blit_sum + (math.sin((n+0.5)*t)/math.sin(0.5*t)-1.0)*dt
 
 # Additive synthesis section(k=1...2)
-p1 = plt.subplot(131)
+p1 = plt.subplot(311)
 plt.plot(v1)
-plt.ylim([-1.3,1.3])
+plt.ylim([-1.5,1.5])
 plt.grid()
 plt.setp(p1.get_xticklabels(), visible=False)
 plt.setp(p1.get_yticklabels(), visible=False)
 plt.title('Additive synthesis(k=1...2)', fontsize=10)
 
 # BLIT synthesis section(k=3...N)
-p2 = plt.subplot(132)
+p2 = plt.subplot(312)
 plt.plot(v2)
-plt.ylim([-1.3,1.3])
+plt.ylim([-1.5,1.5])
 plt.grid()
 plt.setp(p2.get_xticklabels(), visible=False)
 plt.setp(p2.get_yticklabels(), visible=False)
 plt.title('BLIT_saw', fontsize=10)
 
 # Additive + BLIT
-p3 = plt.subplot(133)
+p3 = plt.subplot(313)
 plt.plot(v3)
-plt.ylim([-1.3,1.3])
+plt.ylim([-1.5,1.5])
 plt.grid()
 plt.setp(p3.get_xticklabels(), visible=False)
 plt.setp(p3.get_yticklabels(), visible=False)
