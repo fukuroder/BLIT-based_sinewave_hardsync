@@ -7,7 +7,7 @@
 ### Algorithm
 This waveform is constructed with additive synthesis and BLIT synthesis.
 
-![Figure1](https://raw.github.com/fukuroder/BLIT-based_sinewave_hardsync/master/figure1.png)
+![Figure1](https://raw.github.com/fukuroder/BLIT-based_sinewave_hardsync/master/figure.gif)
 
 ```python
 # test.py
@@ -23,7 +23,7 @@ leak = 0.995          # [0.99, 1.0) (used for leaky integrator)
 slave = 1.2           # [1.0, 2.0] (slave_freq = master_freq * slave)
 
 # set frequency...
-master_freq = 441.0                                               # master frequency
+master_freq = 440.0                                               # master frequency
 
 n = int(sample_rate/2/master_freq)                                # Nyquist limit
 dt = 2*math.pi*master_freq/sample_rate                            # delta t
